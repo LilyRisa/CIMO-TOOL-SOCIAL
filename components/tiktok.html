@@ -1,0 +1,56 @@
+<div id="tiktok-main">
+    <div class="w-100 d-flex justify-content-center">
+        <h1><img src="./static/images/tik-tok.png" alt="" width="50px" height="50px" class="mr-2"> Auto upload video tiktok</h1>
+    </div>
+
+    <div class="row">
+        <div class="col s12">
+            <div class="col s6">
+
+                <div class="row">
+                    <button class="btn select-tik-folder font-12">Chọn thư mục chứa video</button>
+                    <p class="path-tik-video"></p>
+                    <input type="text" id="tik-folder" disabled hidden>
+                </div>
+                <div class="row">
+                    <div class="input-field">
+                        <textarea name="cookie_tik" id="cookie" cols="50" rows="50" class="validate form-control p-0 m-0"></textarea>
+                        <label for="cookie">Cookie</label>
+                      </div>
+                </div>
+                
+
+
+            </div>
+            <div class="col s6">
+                <div class="row">
+                    <div class="col s4">
+                        <div class="switch" id="tik-cron">
+                            <label>
+                              Off
+                              <input type="checkbox">
+                              <span class="lever"></span>
+                              On
+                            </label>
+                          </div>
+                    </div>
+                    <div class="col s-8">Cronjob</div>
+                </div>
+                
+                  
+                
+            </div>
+        </div>
+        <div class="col s12">
+            <div class="row">
+                <div class="col s6">
+                    <a class="waves-effect waves-light btn text-white">Thực thi</a>
+                    <a class="waves-effect waves-light btn text-white">Lên lịch</a>
+                </div>
+                
+            </div>
+            
+        </div>
+        
+    </div>
+</div>

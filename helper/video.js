@@ -1,0 +1,33 @@
+const fs = require('fs');
+const path = require('path');
+const mime = require('mime-types');
+
+ function countVideosInDirectory(directoryPath) {
+    let videoCount = 0;
+  
+    // Đọc danh sách các tệp trong thư mục
+    const files = fs.readdirSync(directoryPath);
+  
+    // Lặp qua từng tệp để kiểm tra xem có phải là video không
+    files.forEach(file => {
+      const filePath = path.join(directoryPath, file);
+  
+      // Kiểm tra xem có phải là thư mục hay không
+      const isDirectory = fs.statSync(filePath).isDirectory();
+  
+      if (isDirectory) {
+        // Nếu là thư mục, đệ quy để kiểm tra thư mục con
+        videoCount += countVideosInDirectory(filePath);
+      } else {
+        // Kiểm tra xem có phải là video không (ở đây chúng ta giả định các video có định dạng phổ biến như mp4, mkv, ...)
+        const mimeType = mime.lookup(filePath);
+        if (mimeType && mimeType.startsWith('video/')) {
+          videoCount++;
+        }
+      }
+    });
+  
+    return videoCount;
+  }
+
+  module.exports = { countVideosInDirectory };

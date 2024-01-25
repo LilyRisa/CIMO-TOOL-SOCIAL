@@ -1,0 +1,80 @@
+@font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: url(../fonts/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format('woff2');
+  }
+  
+  .material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .font-12{
+    font-size: 12px !important;
+  }
+  .font-14{
+    font-size: 14px !important;
+  }
+  .font-16{
+    font-size: 16px !important;
+  }
+  .font-18{
+    font-size: 18px !important;
+  }
+  .font-20{
+    font-size: 20px !important;
+  }
+  .font-22{
+    font-size: 22px !important;
+  }
+  .font-24{
+    font-size: 24px !important;
+  }
+  .font-26{
+    font-size: 26px !important;
+  }
+  .font-28{
+    font-size: 28px !important;
+  }
+  .font-30{
+    font-size: 30px !important;
+  }
+
+  .item-nav{
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+  }
+
+  a:hover{
+    color: unset !important;
+    text-decoration: none !important;
+  }
+  .img-cover{
+    object-fit: cover !important;
+  }
+.select-tik-folder{
+    background-color: #ddd515d9;
+}
+.select-tik-folder:hover{
+    background-color: #b3ad0fd9;
+}
+.select-tik-folder:active{
+    background-color: #b3ad0fd9;
+}
+.select-tik-folder:focus{
+    background-color: #b3ad0fd9;
+}
+  
