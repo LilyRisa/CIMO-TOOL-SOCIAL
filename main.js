@@ -1,6 +1,7 @@
 const { app, BrowserWindow, Menu, Tray } = require('electron');
 const path = require('path');
 const { setupIPCMainHandlers } = require('./ipcMainHandler');
+const {cronTiktok} = require('./cron');
 
 let mainWindow;
 let tray;
@@ -33,6 +34,9 @@ app.on('ready', () => {
 //     }
 //   });
 //   hideWindow.loadFile('null.html');
+
+//cronTiktok
+cronTiktok();
 
 //ipc main
 setupIPCMainHandlers(mainWindow);

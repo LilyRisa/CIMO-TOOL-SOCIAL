@@ -13,6 +13,12 @@
     "electron": "^28.2.0"
   },
   "dependencies": {
-    "mime-types": "^2.1.35"
+    "cron-parser": "^4.9.0",
+    "fs": "^0.0.1-security",
+    "mime-types": "^2.1.35",
+    "node-cron": "^3.0.3",
+    "node-schedule": "^2.1.1",
+    "puppeteer": "^21.9.0",
+    "readline": "^1.3.0"
   }
 }
