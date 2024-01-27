@@ -7,20 +7,26 @@ const {getCronTikTok, getRandomElement, getRandomText, checkFileExistence, creat
 const {arrVideosInDirectory} = require('./helper/video');
 const { log } = require('console');
 const fs = require('fs').promises;
+const {scheduledJobs} = require('node-schedule');
 
 
 function startCron(file, data, campain){
-    console.log('start cron...');
+    
     console.log(campain);
 
     if(!campain.status){
         return;
     }
 
+    if(typeof campain.phinish !== 'undefined'){
+        if(campain.phinish == true) return;   
+    }
+
     if(typeof scheduledJobs[campain.uid] != 'undefined'){
        return;
     }
-
+    console.log('start cron...');
+    
     let task = schedule.scheduleJob(campain.uid,data.crontab, async () => {
 
         let desc = getRandomText(data.desc);
@@ -29,6 +35,13 @@ function startCron(file, data, campain){
         
 
         while(true){  // kiểm tra xem video trong folder lấy ra có trùng với video đã thực thi ở campain
+            if(campain.video.length == arr_video.length) { // nếu video trong thư mục = video đã thực thi thì kết thúc
+                campain.phinish = true;
+                let save_progress = JSON.stringify(campain);
+                await fs.writeFile(file, save_progress, 'utf-8');
+                scheduledJobs[campain.uid].cancel();
+                return;
+            }
             path_video = getRandomElement(arr_video);
             if(!campain.video.includes(path_video)){
                 break;
@@ -59,7 +72,7 @@ function startCron(file, data, campain){
         }
         return;
     });
-    console.log('cron:'+ getCronProgress());
+    // console.log('cron:'+ getCronProgress());
 }
 
 async function cronTiktok() {

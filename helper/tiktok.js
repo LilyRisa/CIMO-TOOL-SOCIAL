@@ -1,12 +1,14 @@
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-extra');
 const path = require('path');   
 var fs = require('fs');
-const {extractHashtags} = require('../helper/ultils')
+const {extractHashtags} = require('../helper/ultils');
+const { log } = require('console');
+const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 
 const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
 
 async function uploadVideo(pathVideo, cookie, desc, proxy = null){
-  console.log(cookie);
+  puppeteer.use(StealthPlugin())
     
     const browser = await puppeteer.launch({
         headless: false,
@@ -29,7 +31,7 @@ async function uploadVideo(pathVideo, cookie, desc, proxy = null){
         ]
      });
      let page;
-    if(proxy != null){
+    if(Object.keys(proxy).length !== 0){
         const context = await browser.createIncognitoBrowserContext({ proxy: proxy.url });
         page = await context.newPage();
     }else{
@@ -55,7 +57,7 @@ async function uploadVideo(pathVideo, cookie, desc, proxy = null){
         const iframeElement = await page.waitForSelector(iframeSelector);
         const frame = await iframeElement.contentFrame();
 
-        const elementInsideIframeSelector = '.before-upload-new-stage';
+        const elementInsideIframeSelector = '.upload-container';
         await frame.waitForSelector(elementInsideIframeSelector);
         try {
             fileInputSelector = 'input[type=file]';
@@ -73,10 +75,13 @@ async function uploadVideo(pathVideo, cookie, desc, proxy = null){
         await typeHashTag(page, frame, hashtags);
         // await page.waitForNavigation({ waitUntil: 'domcontentloaded' });
         let check = await sendPost(page, frame, 1);
+        console.log('main check: ', check);
         if(check){
+            await sleep(3000);
             await browser.close();
             return true;
         }
+        await sleep(3000);
         await browser.close();
         return false;
     } catch (error) {
@@ -91,14 +96,11 @@ async function uploadVideo(pathVideo, cookie, desc, proxy = null){
 const sendPost = async (windows, frame, tryCount = 1) => {
 
     try {
-        const nameInputSelector = '.btn-post button:not([disabled])';
+        const nameInputSelector = '.btn-post > button:not([disabled])';
         await frame.waitForSelector(nameInputSelector);
         console.log('>>> load video success');
         console.log('>>> try send post: ', tryCount);
-        console.log('>>> frame: ', frame);
-        
-        await frame.hover(nameInputSelector);
-        // await frame.focus(nameInputSelector);
+        let send = await frame.$(nameInputSelector);
         await frame.$eval(nameInputSelector, (btn) => btn.click());
         await frame.waitForSelector('.TUXModal-backdrop');
         return true;
@@ -110,7 +112,7 @@ const sendPost = async (windows, frame, tryCount = 1) => {
       }
       await sleep(1000);
       tryCount += 1;
-      await sendPost(frame, tryCount);
+      await sendPost(windows, frame, tryCount);
     }
 };
 
