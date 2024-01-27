@@ -2,6 +2,7 @@ const { app, BrowserWindow, Menu, Tray } = require('electron');
 const path = require('path');
 const { setupIPCMainHandlers } = require('./ipcMainHandler');
 const {cronTiktok} = require('./cron');
+const {getCronProgress} = require('./helper/cron')
 
 let mainWindow;
 let tray;
@@ -35,8 +36,7 @@ app.on('ready', () => {
 //   });
 //   hideWindow.loadFile('null.html');
 
-//cronTiktok
-cronTiktok();
+getCronProgress();
 
 //ipc main
 setupIPCMainHandlers(mainWindow);

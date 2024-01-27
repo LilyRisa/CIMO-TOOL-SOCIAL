@@ -3,6 +3,7 @@
 
 $(document).ready(function(){
     $('.sidenav').sidenav();
+    window.ipcRender.send('crontab_tiktok');
 
   //tiktok download file save
   $(document).on('click','#download_save_tik', function(e){
@@ -152,6 +153,8 @@ $(document).ready(function(){
             html: "Thực thi thành công",
             classes: 'green'
           });
+          window.ipcRender.send('crontab_tiktok');
+          
           return;
         }
         if(!event.status && event.type == 'license'){

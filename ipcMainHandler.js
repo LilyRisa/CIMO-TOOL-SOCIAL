@@ -80,7 +80,7 @@ function setupIPCMainHandlers(mainWindow) {
       try{
         await createFile(file, args);
         event.reply('tiktokStartSaveFile', {status : true});
-        await cronTiktok();
+        // await cronTiktok();
         return;
       }catch(e){
         event.reply('tiktokStartSaveFile', {status : false, type: e});
@@ -96,7 +96,7 @@ function setupIPCMainHandlers(mainWindow) {
     try{
       await createFile(file, args);
       event.reply('tiktokStartSaveFile', {status : true});
-      await cronTiktok();
+      // await cronTiktok();
       return;
     }catch(e){
       event.reply('tiktokStartSaveFile', {status : false, type: e});
@@ -104,6 +104,14 @@ function setupIPCMainHandlers(mainWindow) {
     }
     
   });
+
+
+ipcMain.on('crontab_tiktok', async (event, args) => {
+  // cronjob tiktok
+  await cronTiktok();
+
+});
+
 
 
 }

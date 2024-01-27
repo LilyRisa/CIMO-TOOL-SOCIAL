@@ -6,6 +6,7 @@ const {extractHashtags} = require('../helper/ultils')
 const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
 
 async function uploadVideo(pathVideo, cookie, desc, proxy = null){
+  console.log(cookie);
     
     const browser = await puppeteer.launch({
         headless: false,
@@ -27,11 +28,12 @@ async function uploadVideo(pathVideo, cookie, desc, proxy = null){
             '--safebrowsing-disable-auto-update',
         ]
      });
+     let page;
     if(proxy != null){
         const context = await browser.createIncognitoBrowserContext({ proxy: proxy.url });
-        const page = await context.newPage();
+        page = await context.newPage();
     }else{
-        const page = await browser.newPage();
+        page = await browser.newPage();
     }
     
     
