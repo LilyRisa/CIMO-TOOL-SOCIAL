@@ -1,0 +1,8 @@
+@each $font in $fonts{
+    .fs-#{$font}{
+      font-size: $font * 1px;
+    }
+  }
+.font-weight-bold{
+  font-weight: bold;
+}

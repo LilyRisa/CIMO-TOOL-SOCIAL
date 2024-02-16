@@ -1,0 +1,11 @@
+@function getColor($color, $nth) {
+    @return nth(map-get($colors, $color), $nth);
+  }
+  $fonts: (6, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 48, 68);
+  $colors: (
+          white: (#ffffff, #f4f4f4),
+          grey: (#808d8e, #e7faf9, #6c757d, #dad9d9),
+          red: (#f4612e),
+          black: (#000, #4f0a26,#373536, #191919),
+          blue: (#00c7e4)
+  )

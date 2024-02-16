@@ -93,24 +93,24 @@ async function cronTiktok() {
             name_file = name_file[name_file.length - 1];
             console.log(name_file);
 
-            let campain_file = await checkFileExistence(app.getPath('userData') + '/MLM_GROUP_COMPANY_LIMITED/.campain/'+name_file);
+            let campain_file = await checkFileExistence(app.getPath('userData') + '/MLM_GROUP/.campain/'+name_file);
             let campain = {};
 
             if(!campain_file){ // check nếu không có file thì tạo và khởi tạo dữ liệu ban đầu
                 campain.status = true;
                 campain.video = [];
                 campain.uid = 'cron_'+Date.now().toString();
-                await createFile(app.getPath('userData') + '/MLM_GROUP_COMPANY_LIMITED/.campain/'+name_file, JSON.stringify(campain)) ;
+                await createFile(app.getPath('userData') + '/MLM_GROUP/.campain/'+name_file, JSON.stringify(campain)) ;
 
                 startCron(name_file, data, campain.uid);
                 // await fs.writeFile(app.getPath('userData') + '/MLM_GROUP_COMPANY_LIMITED/.campain/'+name_file, campain, 'utf-8');
 
             }
 
-            campain = await fs.readFile(app.getPath('userData') + '/MLM_GROUP_COMPANY_LIMITED/.campain/'+name_file, 'utf-8');
+            campain = await fs.readFile(app.getPath('userData') + '/MLM_GROUP/.campain/'+name_file, 'utf-8');
             campain = JSON.parse(campain);
             if(campain.status){
-                startCron(app.getPath('userData') + '/MLM_GROUP_COMPANY_LIMITED/.campain/'+name_file, data, campain);
+                startCron(app.getPath('userData') + '/MLM_GROUP/.campain/'+name_file, data, campain);
             }
 
         }
