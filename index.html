@@ -37,11 +37,21 @@
       
     </div>
 
+    <div id="notification" class="hidden">
+      <p id="message"></p>
+      <button id="close-button" onClick="closeNotification()">
+        Close
+      </button>
+      <button id="restart-button" onClick="restartApp()" class="hidden">
+        Restart
+      </button>
+    </div>
+
     
 
     <script src="./static/js/jquery.js"></script>
     <script src="./static/js/materialize.min.js"></script>
-    <!-- <script src="./static/js/loading-bar.js"></script> -->
     <script src="./static/compile/main.min.js"></script>
+    <script src="./static/js/main.js"></script>
   </body>
 </html>

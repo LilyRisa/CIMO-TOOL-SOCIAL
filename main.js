@@ -2,7 +2,8 @@ const { app, BrowserWindow, Menu, Tray } = require('electron');
 const path = require('path');
 const { setupIPCMainHandlers } = require('./ipcMainHandler');
 const {cronTiktok} = require('./cron');
-const {getCronProgress} = require('./helper/cron')
+const {getCronProgress} = require('./helper/cron');
+const { autoUpdater } = require('electron-updater');
 
 let mainWindow;
 let tray;
@@ -35,6 +36,21 @@ app.on('ready', () => {
 //     }
 //   });
 //   hideWindow.loadFile('null.html');
+
+
+// auto update
+
+mainWindow.once('ready-to-show', () => {
+  autoUpdater.checkForUpdatesAndNotify();
+});
+
+autoUpdater.on('update-available', () => {
+  mainWindow.webContents.send('update_available');
+});
+autoUpdater.on('update-downloaded', () => {
+  mainWindow.webContents.send('update_downloaded');
+});
+
 
 getCronProgress();
 
