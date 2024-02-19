@@ -18,7 +18,7 @@ app.on('ready', () => {
     height: 900,
     icon: iconpath,
     webPreferences: {
-        nodeIntegration: false,
+        nodeIntegration: true,
         webSecurity: false,
         contextIsolation: true,
         preload: path.join(__dirname, 'preload.js'),
