@@ -1,0 +1,1 @@
+const {renderHtml} = require('./bundle')

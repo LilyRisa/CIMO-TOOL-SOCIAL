@@ -30,6 +30,34 @@ const mime = require('mime-types');
     return videoCount;
   }
 
+  function countAudiosInDirectory(directoryPath) {
+    let audioCount = 0;
+  
+    // Đọc danh sách các tệp trong thư mục
+    const files = fs.readdirSync(directoryPath);
+  
+    // Lặp qua từng tệp để kiểm tra xem có phải là video không
+    files.forEach(file => {
+      const filePath = path.join(directoryPath, file);
+  
+      // Kiểm tra xem có phải là thư mục hay không
+      const isDirectory = fs.statSync(filePath).isDirectory();
+  
+      if (isDirectory) {
+        // Nếu là thư mục, đệ quy để kiểm tra thư mục con
+        audioCount += countVideosInDirectory(filePath);
+      } else {
+        // Kiểm tra xem có phải là video không (ở đây chúng ta giả định các video có định dạng phổ biến như mp4, mkv, ...)
+        const mimeType = mime.lookup(filePath);
+        if (mimeType && mimeType.startsWith('audio/')) {
+          audioCount++;
+        }
+      }
+    });
+  
+    return audioCount;
+  }
+
   function arrVideosInDirectory(directoryPath) {
     let videos = [];
   
@@ -58,4 +86,32 @@ const mime = require('mime-types');
     return videos;
   }
 
-  module.exports = { countVideosInDirectory, arrVideosInDirectory};
+  function arrAudiosInDirectory(directoryPath) {
+    let audios = [];
+  
+    // Đọc danh sách các tệp trong thư mục
+    const files = fs.readdirSync(directoryPath);
+  
+    // Lặp qua từng tệp để kiểm tra xem có phải là video không
+    files.forEach(file => {
+      const filePath = path.join(directoryPath, file);
+  
+      // Kiểm tra xem có phải là thư mục hay không
+      const isDirectory = fs.statSync(filePath).isDirectory();
+  
+      if (isDirectory) {
+        // Nếu là thư mục, đệ quy để kiểm tra thư mục con
+        audios.push(countVideosInDirectory(filePath));
+      } else {
+        // Kiểm tra xem có phải là video không (ở đây chúng ta giả định các video có định dạng phổ biến như mp4, mkv, ...)
+        const mimeType = mime.lookup(filePath);
+        if (mimeType && mimeType.startsWith('audio/')) {
+          audios.push(filePath);
+        }
+      }
+    });
+  
+    return audios;
+  }
+
+  module.exports = { countVideosInDirectory, arrVideosInDirectory, arrAudiosInDirectory, countAudiosInDirectory};

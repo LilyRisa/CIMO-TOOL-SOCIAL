@@ -1,12 +1,13 @@
-const { ipcMain, dialog, app } = require('electron');
+const { ipcMain, dialog, app, remote } = require('electron');
 var fs = require('fs').promises;
 const cronParser = require('cron-parser');
 const {isValidCronExpression, checkFileExistence, createFile} = require('./helper/ultils')
 const {checkLicense} = require('./helper/license')
 
-const {countVideosInDirectory} = require('./helper/video');
+const {countVideosInDirectory, countAudiosInDirectory} = require('./helper/video');
 const { log } = require('console');
 const {cronTiktok} = require('./cron');
+const {videoEdit} = require('./helper/video_editing');
 
 function setupIPCMainHandlers(mainWindow) {
 
@@ -17,8 +18,31 @@ function setupIPCMainHandlers(mainWindow) {
     }).then(result => {
       if (!result.canceled) {
         const selectedFolder = result.filePaths[0];
-        const countvideo = countVideosInDirectory(selectedFolder);
+        let countvideo = countVideosInDirectory(selectedFolder);
+        if(typeof args !== 'undefined'){
+          countvideo = countAudiosInDirectory(selectedFolder);
+        }
         event.reply('ReopenFolderDialog', {selectedFolder, countvideo});
+      }
+    }).catch(err => {
+      console.error(err);
+    });
+  });
+
+  ipcMain.on('openFolder', (event, args) => {
+    dialog.showOpenDialog(mainWindow, {
+      title: 'Chọn Thư Mục',
+      properties: ['openDirectory']
+    }).then(result => {
+      if (!result.canceled) {
+        const selectedFolder = result.filePaths[0];
+        let countvideo;
+        if(args.type == 'audio'){
+          countvideo = countAudiosInDirectory(selectedFolder);
+        }else{
+          countvideo = countVideosInDirectory(selectedFolder);
+        }
+        event.reply('ReopenFolder'+args.name, {selectedFolder, countvideo});
       }
     }).catch(err => {
       console.error(err);
@@ -71,12 +95,12 @@ function setupIPCMainHandlers(mainWindow) {
       event.reply('tiktokStartSaveFile', {status : false, type: 'crontab'});
       return;
     }
-    let file = app.getPath('userData') + '/MLM_GROUP_COMPANY_LIMITED/tikok_background.json';
+    let file = app.getPath('userData') + '/MLM_GROUP/tikok_background.json';
     let check_file_exits = await checkFileExistence(file);
 
     if(check_file_exits && checkLicense()){
       const uniqueId = Date.now().toString();
-      file = app.getPath('userData') + '/MLM_GROUP_COMPANY_LIMITED/tikok_background'+uniqueId+'.json';
+      file = app.getPath('userData') + '/MLM_GROUP/tikok_background'+uniqueId+'.json';
       try{
         await createFile(file, args);
         event.reply('tiktokStartSaveFile', {status : true});
@@ -112,6 +136,24 @@ ipcMain.on('crontab_tiktok', async (event, args) => {
 
 });
 
+
+
+ipcMain.on('open_devtool', (event, args) => {
+  mainWindow.webContents.openDevTools();
+});
+
+// edit video
+
+ipcMain.on('editvideo', async (event, args) => {
+
+  let status = await videoEdit(args);
+  if(status){
+    event.reply('editvideo_reply', {status : true});
+  }else{
+    event.reply('editvideo_reply', {status : false});
+  }
+
+});
 
 
 }

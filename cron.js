@@ -103,7 +103,7 @@ async function cronTiktok() {
                 await createFile(app.getPath('userData') + '/MLM_GROUP/.campain/'+name_file, JSON.stringify(campain)) ;
 
                 startCron(name_file, data, campain.uid);
-                // await fs.writeFile(app.getPath('userData') + '/MLM_GROUP_COMPANY_LIMITED/.campain/'+name_file, campain, 'utf-8');
+                // await fs.writeFile(app.getPath('userData') + '/MLM_GROUP/.campain/'+name_file, campain, 'utf-8');
 
             }
 

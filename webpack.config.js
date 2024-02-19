@@ -15,6 +15,9 @@ const NODE_MODULE = path.resolve(__dirname, 'node_modules');
 const entry = {
     main: [
         JS_DIR + '/bundle.js',
+        JS_DIR + '/tiktok.js',
+        JS_DIR + '/facebook.js',
+        JS_DIR + '/video_editing.js',
         CSS_DIR + '/bundle.scss',
     ]
 };
@@ -40,7 +43,7 @@ const rules = [
         ],
     },
     {
-        test: /(?:(?!(-|\.)amp)[\w\.-]{4}|^[\w\.-]{1,3})\.(scss|sass)$/,
+        test: /\.scss$/,
         exclude: NODE_MODULE,
         include: path.resolve(__dirname),
         use: [
@@ -48,28 +51,13 @@ const rules = [
                 loader: 'file-loader',
                 options: { outputPath: 'static/compile' , name: '[name].min.css'}
             },
+            // 'style-loader',
+            // "css-loader",
             "sass-loader", // 1. Turns sass into css
+            // "css-loader",
+            // 'style-loader',
         ],
-    },
-    {
-        test: /^.+\.amp\.(scss|sass)$/,
-        exclude: NODE_MODULE,
-        include: path.resolve(__dirname),
-        use: [
-            {
-                loader: 'file-loader',
-                options: { outputPath: 'static/compile' , name: '[name].min.css'}
-            },
-            {
-                loader: 'sass-loader',
-                options: {
-                    sassOptions : {
-                        outputStyle: 'compressed'
-                    }
-                }
-            },
-            
-        ],
+        
     }
 ];
 module.exports = () => ({
@@ -81,12 +69,13 @@ module.exports = () => ({
     },
     optimization : {
         minimizer: [
-            new CssMinimizerPlugin(),
+            // new CssMinimizerPlugin(),
             new TerserPlugin(),
         ],
         minimize: true,
     },
     plugins: [
-        new MiniCssExtractPlugin(),
+        // new MiniCssExtractPlugin(),
     ],
+    
 });

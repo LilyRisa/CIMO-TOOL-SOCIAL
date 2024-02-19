@@ -1,0 +1,271 @@
+$color_1: #3498db;
+$color_2: #fff;
+$color_3: #2ecc71;
+$color_4: #e74c3c;
+$color_5: #9b59b6;
+$color_6: #e67e22;
+$color_7: #27ae60;
+$color_8: #00ff00;
+$background-color_1: #f0f0f0;
+$background-color_2: #fff;
+$background-color_3: #3498db;
+$background-color_4: #2ecc71;
+$background-color_5: #e74c3c;
+$background-color_6: #9b59b6;
+$background-color_7: #e67e22;
+$background-color_8: #27ae60;
+$background-color_9: transparent;
+$border-color_1: #fff;
+
+@keyframes shake {
+	0%,100% {
+		transform: translateX(0);
+	}
+	25% {
+		transform: translateX(-5px);
+	}
+	50% {
+		transform: translateX(5px);
+	}
+	75% {
+		transform: translateX(-5px);
+	}
+}
+@keyframes pulse-border {
+	0% {
+		border-color: #e67e22;
+	}
+	50% {
+		border-color: #3498db;
+	}
+	100% {
+		border-color: #e67e22;
+	}
+}
+
+.mbutton {
+	display: inline-block;
+	padding: 10px 20px;
+	margin: 10px;
+	text-align: center;
+	text-decoration: none;
+	font-size: 16px;
+	cursor: pointer;
+	transition: background-color 0.3s, color 0.3s;
+}
+.default {
+	border: 2px solid #3498db;
+	color: $color_1;
+	background-color: $background-color_2;
+	&:hover {
+		background-color: $background-color_3;
+		color: $color_2;
+	}
+}
+.primary {
+	border: 2px solid #2ecc71;
+	color: $color_3;
+	background-color: $background-color_2;
+	&:hover {
+		background-color: $background-color_4;
+		color: $color_2;
+	}
+}
+.secondary {
+	border: 2px solid #e74c3c;
+	color: $color_4;
+	background-color: $background-color_2;
+	&:hover {
+		background-color: $background-color_5;
+		color: $color_2;
+	}
+}
+.gradient {
+	background: linear-gradient(to right, #3498db, #2ecc71);
+	color: $color_2;
+	border: none;
+}
+.rounded {
+	border-radius: 20px;
+	border: 2px solid #9b59b6;
+	color: $color_5;
+	background-color: $background-color_2;
+	&:hover {
+		background-color: $background-color_6;
+		color: $color_2;
+	}
+}
+.borderless {
+	border: none;
+	color: $color_6;
+	background-color: $background-color_2;
+	&:hover {
+		background-color: $background-color_7;
+		color: $color_2;
+	}
+}
+.shadow {
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	border: 2px solid #27ae60;
+	color: $color_7;
+	background-color: $background-color_2;
+	&:hover {
+		background-color: $background-color_8;
+		color: $color_2;
+	}
+}
+.italic {
+	font-style: italic;
+	border: 2px solid #3498db;
+	color: $color_1;
+	background-color: $background-color_2;
+	&:hover {
+		background-color: $background-color_3;
+		color: $color_2;
+	}
+}
+.uppercase {
+	text-transform: uppercase;
+	border: 2px solid #e74c3c;
+	color: $color_4;
+	background-color: $background-color_2;
+	&:hover {
+		background-color: $background-color_5;
+		color: $color_2;
+	}
+}
+.animated {
+	animation: pulse 1s infinite;
+	border: 2px solid #2ecc71;
+	color: $color_3;
+	background-color: $background-color_2;
+	&:hover {
+		background-color: $background-color_4;
+		color: $color_2;
+	}
+}
+.dashed {
+	border: 2px dashed #3498db;
+	color: $color_1;
+	background-color: $background-color_2;
+	&:hover {
+		background-color: $background-color_3;
+		color: $color_2;
+	}
+}
+.neon {
+	color: $color_8;
+	text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
+	&:hover {
+		color: $color_2;
+	}
+}
+.outline {
+	border: 2px solid #e67e22;
+	color: $color_6;
+	background-color: $background-color_2;
+	&:hover {
+		background-color: $background-color_7;
+		color: $color_2;
+	}
+}
+.glow {
+	box-shadow: 0 0 10px #3498db;
+	border: 2px solid #3498db;
+	color: $color_1;
+	background-color: $background-color_2;
+	&:hover {
+		box-shadow: 0 0 20px #3498db;
+		background-color: $background-color_3;
+		color: $color_2;
+	}
+}
+.pulse {
+	animation: pulse 1s infinite;
+	border: 2px solid #9b59b6;
+	color: $color_5;
+	background-color: $background-color_2;
+	&:hover {
+		background-color: $background-color_6;
+		color: $color_2;
+	}
+}
+.wide {
+	padding: 10px 40px;
+	border: 2px solid #27ae60;
+	color: $color_7;
+	background-color: $background-color_2;
+	&:hover {
+		background-color: $background-color_8;
+		color: $color_2;
+	}
+}
+.transparent {
+	background-color: $background-color_9;
+	color: $color_1;
+	border: 2px solid #3498db;
+	&:hover {
+		background-color: $background-color_3;
+		color: $color_2;
+	}
+}
+.flip {
+	perspective: 1000px;
+	&:hover {
+		.mbutton {
+			transform: rotateY(180deg);
+		}
+	}
+}
+.gradient-border {
+	background: linear-gradient(to right, #2ecc71, #e74c3c);
+	border: 2px solid transparent;
+	background-clip: border-box;
+	color: $color_2;
+	&:hover {
+		border-color: $border-color_1;
+	}
+}
+.rainbow {
+	background: linear-gradient(to right, violet, indigo, blue, green, yellow, orange, red);
+	color: $color_2;
+	border: none;
+}
+.hover-scale {
+	transition: transform 0.3s;
+	&:hover {
+		transform: scale(1.2);
+	}
+}
+.shake {
+	animation: shake 0.5s;
+}
+.invert {
+	filter: invert(100%);
+	border: 2px solid #3498db;
+	color: $color_1;
+	background-color: $background-color_2;
+	&:hover {
+		background-color: $background-color_3;
+		color: $color_2;
+	}
+}
+.pulse-border {
+	animation: pulse-border 1s infinite;
+	border: 2px solid #e67e22;
+	color: $color_6;
+	background-color: $background-color_2;
+	&:hover {
+		background-color: $background-color_7;
+		color: $color_2;
+	}
+}
+.transparent-bg {
+	background-color: $background-color_9;
+	color: $color_4;
+	border: 2px solid #e74c3c;
+	&:hover {
+		background-color: $background-color_5;
+		color: $color_2;
+	}
+}

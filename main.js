@@ -17,7 +17,7 @@ app.on('ready', () => {
     height: 900,
     icon: iconpath,
     webPreferences: {
-        nodeIntegration: true,
+        nodeIntegration: false,
         webSecurity: false,
         contextIsolation: true,
         preload: path.join(__dirname, 'preload.js'),
@@ -63,7 +63,11 @@ tray.on('click', () => {
     { label: 'Thoát', click: function(){
         isQuiting = true;
         app.quit();
-    } }
+    }},
+    { label: 'Developer Tools', click: function(){
+      mainWindow.webContents.toggleDevTools();
+  }}
+
   ]);
   tray.setContextMenu(contextMenu);
 
@@ -76,6 +80,9 @@ tray.on('click', () => {
   });
 
 });
+
+app.commandLine.appendSwitch('remote-debugging-port', '8315');
+app.commandLine.appendSwitch('host-rules', 'MAP * 127.0.0.1');
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {

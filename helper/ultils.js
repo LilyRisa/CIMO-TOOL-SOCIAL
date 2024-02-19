@@ -61,12 +61,12 @@ function extractHashtags(desc) {
 async function getCronTikTok(){
 
   if(checkLicense()){
-      let arrFile = await fs.readdir(app.getPath('userData') + '/MLM_GROUP_COMPANY_LIMITED');
+      let arrFile = await fs.readdir(app.getPath('userData') + '/MLM_GROUP');
       const regex = /^tikok_background.*\.json$/;
       const filteredFiles = arrFile.filter((file) => regex.test(file));
-      return filteredFiles.map(file => app.getPath('userData') + '/MLM_GROUP_COMPANY_LIMITED/'+ file);
+      return filteredFiles.map(file => app.getPath('userData') + '/MLM_GROUP/'+ file);
   }
-  if(checkFileExistence(app.getPath('userData') + '/MLM_GROUP_COMPANY_LIMITED/tikok_background.json')) return app.getPath('userData') + '/MLM_GROUP_COMPANY_LIMITED/tikok_background.json';
+  if(checkFileExistence(app.getPath('userData') + '/MLM_GROUP/tikok_background.json')) return app.getPath('userData') + '/MLM_GROUP/tikok_background.json';
   return [];
 
 }
