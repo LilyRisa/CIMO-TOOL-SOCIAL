@@ -1,4 +1,4 @@
-const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path.replace('app.asar', 'app.asar.unpacked');
+const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path.replace( 'app.asar.unpacked');
 const ffmpeg = require('fluent-ffmpeg');
 const util = require('util');
 const path = require('path');
@@ -58,7 +58,7 @@ function get_name_file(path){
 async function editVideoProcess(inputVideo, inputAudio, pathExecute, flip, mute) {
 
 
-    // try {
+    try {
         const filename = path.basename(inputVideo);
         const outputVideo = path.join(pathExecute, filename);
 
@@ -123,10 +123,10 @@ async function editVideoProcess(inputVideo, inputAudio, pathExecute, flip, mute)
         // Delete the temporary video
         await unlinkPromise(tmpVideo);
         return {status: true, erro: null};
-    // } catch (error) {
-    //     console.error(`Error: ${error.message}`);
-    //     return {status: false, erro: error.message};
-    // }
+    } catch (error) {
+        console.error(`Error: ${error.message}`);
+        return {status: false, erro: error.message};
+    }
 }
 
 
