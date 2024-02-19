@@ -6,13 +6,16 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack --config webpack.config.js --mode=production && electron .",
-    "compile": "webpack --config webpack.config.js --mode=production"
+    "compile": "webpack --config webpack.config.js --mode=production",
+    "build": "electron-builder build --mac --win --publish never",
+    "deploy": "electron-builder build --mac --win --publish always"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "css-loader": "^6.10.0",
     "electron": "^28.2.0",
+    "electron-builder": "^24.9.1",
     "file-loader": "^6.2.0",
     "node-sass": "^9.0.0",
     "sass": "^1.71.0",
@@ -25,6 +28,7 @@
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
     "cron-parser": "^4.9.0",
     "css-minimizer-webpack-plugin": "^6.0.0",
+    "electron-updater": "^6.1.7",
     "fluent-ffmpeg": "^2.1.2",
     "fs": "^0.0.1-security",
     "mime-types": "^2.1.35",
@@ -43,6 +47,18 @@
       "node_modules/ffmpeg-static/bin/${os}/${arch}/ffmpeg",
       "node_modules/ffmpeg-static/index.js",
       "node_modules/ffmpeg-static/package.json"
+    ],
+    "appId": "com.mlmgroup.tool",
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "lilyrisa",
+        "repo": "your-repo-name"
+      }
     ]
+  },
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/LilyRisa/MLM-GROUP-COMPANY-LIMITED.git"
   }
 }
