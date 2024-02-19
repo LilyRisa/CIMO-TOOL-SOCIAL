@@ -5,7 +5,8 @@ $(document).ready(function(){
 
     window.ipcRender.send('check_for_update');
 
-    window.ipcRender.receive('update_available', (event) => {
+    window.ipcRender.receive('check_for_update', (event) => {
+      console.log('check_for_update', event);
         // window.ipcRender.removeAllListeners('update_available');
         if(event.status){
           message.text('Đã có bản cập nhật mới. Đang tải xuống ngay bây giờ...');
@@ -16,6 +17,7 @@ $(document).ready(function(){
       });
   
       window.ipcRender.receive('download_update', (event) => {
+        console.log('download_update', event);
         // window.ipcRenderer.removeAllListeners('update_downloaded');
         if(event.status){
           message.text('Đã tải xuống bản cập nhật. Nó sẽ được cài đặt khi khởi động lại. Khởi động lại bây giờ?');
