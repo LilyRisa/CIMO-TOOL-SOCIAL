@@ -1,6 +1,6 @@
 {
   "name": "tool-mlm",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Ứng dụng chạy nội bộ cho MLM GROUPS",
   "main": "main.js",
   "scripts": {
@@ -54,7 +54,7 @@
         "provider": "github",
         "owner": "LilyRisa",
         "repo": "MLM-GROUP-COMPANY-LIMITED",
-        "token" : "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"
+        "token" : "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"
       }
     ]
   },

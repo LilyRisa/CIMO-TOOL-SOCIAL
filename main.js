@@ -42,13 +42,13 @@ app.on('ready', () => {
 // auto update
 autoUpdater.checkForUpdatesAndNotify();
 
-// autoUpdater.setFeedURL({
-//   provider: 'github',
-//   repo: 'MLM-GROUP-COMPANY-LIMITED',
-//   owner: 'lilyrisa',
-//   private: true,
-//   token: ''
-// })
+autoUpdater.setFeedURL({
+  provider: 'github',
+  repo: 'MLM-GROUP-COMPANY-LIMITED',
+  owner: 'lilyrisa',
+  private: true,
+  token: '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'
+})
 
 console.log(autoUpdater.checkForUpdatesAndNotify());
 
