@@ -146,11 +146,12 @@ ipcMain.on('open_devtool', (event, args) => {
 
 ipcMain.on('editvideo', async (event, args) => {
 
-  let status = await videoEdit(args);
+  let status = await videoEdit(args, function(path, phantram, count){
+    event.reply('editvideo_reply', {path, phantram, count});
+  });
+  console.log(status);
   if(status){
-    event.reply('editvideo_reply', {status : true});
-  }else{
-    event.reply('editvideo_reply', {status : false});
+    event.reply('editvideo_reply_done', {status : true});
   }
 
 });

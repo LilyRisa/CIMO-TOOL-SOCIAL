@@ -11,7 +11,7 @@ const { app} = require('electron');
 
 // const ffmpegPath = path.resolve(process.resourcesPath, "app.asar.unpacked/ffmpeg");
 
-const {arrVideosInDirectory, arrAudiosInDirectory} = require('./video');
+const {arrVideosInDirectory, arrAudiosInDirectory, countVideosInDirectory} = require('./video');
 const { log } = require("console");
 
 ffmpeg.setFfmpegPath(ffmpegPath);
@@ -125,11 +125,14 @@ async function editVideoProcess(inputVideo, inputAudio, pathExecute, flip, mute)
             arr_cmd.push('-an');
         }
         
-        
+        console.log(inputAudio);
+        console.log(inputVideo);
+
+        let ffm_tem = ffmpeg();
         await new Promise((resolve, reject) => {
             ffmpeg()
                 .input(inputVideo)
-                .inputOptions(arr_cmd)
+                .outputOptions(arr_cmd)
                 .videoCodec('libx264')
                 .on('end', resolve)
                 .on('error', reject)
@@ -144,7 +147,7 @@ async function editVideoProcess(inputVideo, inputAudio, pathExecute, flip, mute)
                     .audioCodec('aac')
                     .input(inputAudio)
                     .audioCodec('aac')
-                    .videoCodec('copy')
+                    .outputOptions(['-c:v copy', '-map 0:v:0', '-map 1:a:0', '-shortest',])
                     .audioChannels(1)
                     .audioFrequency(44100)
                     .on('end', resolve)
@@ -166,81 +169,54 @@ async function editVideoProcess(inputVideo, inputAudio, pathExecute, flip, mute)
 
         // Display the results
         console.log('Conversion finished successfully.');
-
         // Delete the temporary video
         await unlinkPromise(tmpVideo);
+        return true;
     } catch (error) {
         console.error(`Error: ${error.message}`);
+        return false;
     }
 }
 
 
 
-async function videoEdit(args){
-    console.log('args',args);
+async function videoEdit(args, func){
+
+
+    let count_video = countVideosInDirectory(args.path_video);
+
+    for(let i=0 ; i < count_video; i++){
+
+        let path_video = await get_item_random_unique(args.path_video, arrVideosInDirectory );
+        if(path_video == null) continue;
+        let path_audio = null;
+        if(args.audio != null){
+            path_audio = await arrAudiosInDirectory(args.audio);
+            randomIndex = Math.floor(Math.random() * path_audio.length);
+            path_audio = path_audio[randomIndex];
+        }
     
-    let path_video = await get_item_random_unique(args.path_video, arrVideosInDirectory );
-    let path_audio = null;
-    if(args.audio != null){
-        path_audio = await arrAudiosInDirectory(args.audio);
-        randomIndex = Math.floor(Math.random() * path_audio.length);
-        path_audio = path_audio[randomIndex];
+        let save_file = await fs.readFile(app.getPath('userData') + '/MLM_GROUP/video_edit.json', 'utf-8');
+        save_file = JSON.parse(save_file);
+    
+        console.log(app.getPath('userData') + '/MLM_GROUP/video_edit.json');
+    
+        let status = await editVideoProcess(path_video, path_audio, args.save_video, args.flip, args.mute);
+        if(status) save_file.push(path_video);
+        save_file = JSON.stringify(save_file);
+        await fs.writeFile(app.getPath('userData') + '/MLM_GROUP/video_edit.json', save_file, 'utf-8');
+
+        let phantram = (i+1)/count_video;
+        phantram = Math.round(phantram * 100) / 100;
+        console.log(phantram);
+
+        func(path.basename(path_video), phantram, (i+1));
     }
-    console.log('video',path_video);
-    console.log('audio',path_audio);
-    console.log('path',args.save_video);
-    
-    await editVideoProcess(path_video, path_audio, args.save_video, args.flip, args.mute);
+    // let path_video = await get_item_random_unique(args.path_video, arrVideosInDirectory );
+    await fs.writeFile(app.getPath('userData') + '/MLM_GROUP/video_edit.json', '[]', 'utf-8');
     return true;
 
-    // console.log('video');
-    // console.log(path_video);
-    // console.log('audio');
-    // console.log(path_audio);
-
-    // let options = {};
-
-    // if(args.flip == true){
-    //     options.flip = true;
-    // }
-
-    // if (args.mute) {
-    //     options.mute = true;
-    // }
-
-    // if (args.audio != null ) {
-    //     options.audio = path_audio;
-    // }else{
-    //     options.audio = null;
-    // }
-    // options.changeCodec = true;
-
-    // console.log('save video', args.save_video + '/' + path.basename(path_video));
-
-
-    // return await processVideo(path_video, args.save_video + '/' + path.basename(path_video), options);
-
-    // const ffm = ffmpeg().input(path_video);
-    // if(args.flip == true){
-    //     ffm.videoFilter('hflip');
-    // }
-
-    // if(args.mute == true){
-    //     ffm.noAudio();
-    // }
-
-    // if(args.audio != null){
-    //     ffm.input(path_audio).audioCodec('aac').audioBitrate(128);
-    // }
-    // console.log(ffm);
-
-    // ffm.mergeToFile(args.save_video + '/' + get_name_file(path_video), './tmp/')
-    // .on('end', () => {
-    //     func(null);
-    // })
-    // .on('error', (err) => {
-    //     func(err)
-    // });
+    
 }
 
 module.exports = {videoEdit}

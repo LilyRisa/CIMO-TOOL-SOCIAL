@@ -1,8 +1,15 @@
 const {renderHtml} = require('./bundle')
 
 $(document).ready(function(){
+
+    
+
+    $('#edit_video_result').hide();
+
     // video_editing  click
     $('#video-edit-navbar').on('click', function(e){
+   
+
         e.preventDefault();
         $('.sidenav').sidenav('close');
         renderHtml('#root', 'video_editing.html', function(){
@@ -55,10 +62,11 @@ $(document).ready(function(){
     });
 
     $(document). on('click', '#exec_video', function(){
+        $('.edit_video_result').show();
         $('#exec_video').attr('disabled','');
-        $('#exec_video').attr('class','mbuton default');
+        // $('#exec_video').attr('class','mbuton default');
         $('#exec_video').html(`Thực thi <img class="ml-1" src="./static/images/loading.svg" width="40px" height="40px">`);
-
+        $('.edit_video_result .video_edit_result_text').html(`Đang khởi động...`);
         let args = {}
 
         args.path_video = $('#folder_video_selected_input').val(); 
@@ -81,7 +89,25 @@ $(document).ready(function(){
     });
 
     window.ipcRender.receive('editvideo_reply', (event) => {
-       console.log('editvideo_reply'+ event);
+       console.log('editvideo_reply', event);
+
+       $('.edit_video_result #process_bar_video_edit').attr('aria-valuenow', event.phantram * 100);
+       $('.edit_video_result .video_edit_result_text').html(`
+        <p> Thực thi file: <b>${event.path}</b> (${event.phantram * 100}%)
+       `);
+       $('.folder_selected_save').find('.file_result').html(event.count);
+       
     });
+    window.ipcRender.receive('editvideo_reply_done', (event) => {
+        console.log('editvideo_reply_done', event);
+        $('.edit_video_result .video_edit_result_text').html(``);
+        $('#exec_video').find('img').remove(); 
+        $('#exec_video').removeAttr('disabled');
+        M.toast({
+            html: "Đã hoàn thành",
+            displayLength: 10000,
+            classes: 'green'
+          });
+     });
 
 });
