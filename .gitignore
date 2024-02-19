@@ -10,6 +10,8 @@ lerna-debug.log*
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
+.bash_profile
+electron-builder.yml
 # Runtime data
 pids
 *.pid
