@@ -1,4 +1,4 @@
-const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
+const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path.replace('app.asar', 'app.asar.unpacked');
 const ffmpeg = require('fluent-ffmpeg');
 const util = require('util');
 const path = require('path');
@@ -7,7 +7,7 @@ const fs = require('fs').promises;
 const fss = require('fs');
 const unlinkPromise = util.promisify(fss.unlink);
 const {getCronTikTok, getRandomElement, getRandomText, checkFileExistence, createFile} = require('./ultils');
-const { app} = require('electron');
+const { app, ipcMain} = require('electron');
 
 // const ffmpegPath = path.resolve(process.resourcesPath, "app.asar.unpacked/ffmpeg");
 
@@ -54,60 +54,11 @@ function get_name_file(path){
 }
 
 
-async function processVideo(inputVideo, outputVideo, options = {}) {
-    return new Promise((resolve, reject) => {
-        try {
-            let command = ffmpeg(inputVideo);
-
-            // Kiểm tra và áp dụng tính năng lật ngược video
-            if (options.flip) {
-                command = command.videoFilters('hflip');
-            }
-
-            // Kiểm tra và áp dụng tính năng tắt tiếng
-            if (options.mute) {
-                command = command.noAudio();
-            }
-
-            
-
-            if (options.changeCodec) {
-                command = command.videoCodec('libx264');
-            } else {
-                command = command.videoCodec('copy');
-            }
-
-            if(options.audio != null){
-                command = command.input(options.audio)
-            }
-
-            // Thực hiện ghép nhạc vào video
-            command = command.audioCodec('aac')
-                .on('end', () => {
-                    console.log('Processing completed successfully');
-
-                    // Xóa các tệp tạm
-                    if (options.flip) {
-                        fss.unlinkSync('temp_flipped.mp4');
-                    }
-                    if (options.mute) {
-                        fss.unlinkSync('temp_muted.mp4');
-                    }
-
-                    console.log('Temporary files deleted');
-                    resolve(true);
-                })
-                .on('error', (err) => reject(err))
-                .save(outputVideo);
-        } catch (error) {
-            reject(error);
-        }
-    });
-}
-
 
 async function editVideoProcess(inputVideo, inputAudio, pathExecute, flip, mute) {
-    try {
+
+
+    // try {
         const filename = path.basename(inputVideo);
         const outputVideo = path.join(pathExecute, filename);
 
@@ -171,11 +122,11 @@ async function editVideoProcess(inputVideo, inputAudio, pathExecute, flip, mute)
         console.log('Conversion finished successfully.');
         // Delete the temporary video
         await unlinkPromise(tmpVideo);
-        return true;
-    } catch (error) {
-        console.error(`Error: ${error.message}`);
-        return false;
-    }
+        return {status: true, erro: null};
+    // } catch (error) {
+    //     console.error(`Error: ${error.message}`);
+    //     return {status: false, erro: error.message};
+    // }
 }
 
 
@@ -201,17 +152,26 @@ async function videoEdit(args, func){
     
         console.log(app.getPath('userData') + '/MLM_GROUP/video_edit.json');
     
-        let status = await editVideoProcess(path_video, path_audio, args.save_video, args.flip, args.mute);
-        if(status) save_file.push(path_video);
-        save_file = JSON.stringify(save_file);
-        await fs.writeFile(app.getPath('userData') + '/MLM_GROUP/video_edit.json', save_file, 'utf-8');
-
+        let {status, erro} = await editVideoProcess(path_video, path_audio, args.save_video, args.flip, args.mute);
         let phantram = (i+1)/count_video;
-        phantram = Math.round(phantram * 100) / 100;
-        console.log(phantram);
+        if(status){
+            save_file.push(path_video);
+            save_file = JSON.stringify(save_file);
+            await fs.writeFile(app.getPath('userData') + '/MLM_GROUP/video_edit.json', save_file, 'utf-8');
+            
+            phantram = Math.round(phantram * 100) / 100;
+            console.log(phantram);
 
-        func(path.basename(path_video), phantram, (i+1));
+            func(path.basename(path_video), phantram, (i+1));
+        }else{
+            func(path.basename(path_video), phantram, (i+1), erro);
+        }
+        
+
+        
     }
+    
+    
     // let path_video = await get_item_random_unique(args.path_video, arrVideosInDirectory );
     await fs.writeFile(app.getPath('userData') + '/MLM_GROUP/video_edit.json', '[]', 'utf-8');
     return true;

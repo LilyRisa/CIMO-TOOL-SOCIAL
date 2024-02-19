@@ -16,8 +16,8 @@ function ipcMainEditvideo(mainWindow){
 
 ipcMain.on('editvideo', async (event, args) => {
 
-    let status = await videoEdit(args, function(path, phantram, count){
-      event.reply('editvideo_reply', {path, phantram, count});
+    let status = await videoEdit(args, function(path, phantram, count, errono){
+      event.reply('editvideo_reply', {path, phantram, count, errono});
     });
     console.log(status);
     if(status){

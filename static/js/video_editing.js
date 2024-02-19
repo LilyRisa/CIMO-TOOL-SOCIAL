@@ -109,5 +109,9 @@ $(document).ready(function(){
             classes: 'green'
           });
      });
+     window.ipcRender.send('editvideodebugging', args);
+     window.ipcRender.receive('editvideodebugging', (event) => {
+        console.log(event);
+     });
 
 });
