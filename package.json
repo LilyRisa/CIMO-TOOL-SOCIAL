@@ -1,6 +1,6 @@
 {
   "name": "tool-mlm",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Ứng dụng chạy nội bộ cho MLM GROUPS",
   "main": "main.js",
   "scripts": {
