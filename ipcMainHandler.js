@@ -35,6 +35,17 @@ function setupIPCMainHandlers(mainWindow) {
     mainWindow.webContents.openDevTools();
   });
 
+  ipcMain.on('check_for_update', (event, args) => {
+    autoUpdater.on('update-available', () => {
+      event.reply('check_for_update', {status: true});
+    });
+  });
+  ipcMain.on('download_update', (event, args) => {
+    autoUpdater.on('update-downloaded', () => {
+      event.reply('download_update', {status: true});
+    });
+  });
+
   ipcMain.on('restart_app', () => {
     autoUpdater.quitAndInstall();
   });
