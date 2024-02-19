@@ -25,7 +25,7 @@ app.on('ready', () => {
     }
   });
   mainWindow.loadFile('index.html');
-  mainWindow.webContents.openDevTools(); // debug
+  // mainWindow.webContents.openDevTools(); // debug
 
 //   // windows ẩn
 //   hideWindow = new BrowserWindow({
