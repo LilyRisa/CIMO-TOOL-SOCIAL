@@ -1,4 +1,4 @@
-const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path.replace( 'app.asar.unpacked');
+const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path.replace('app.asar', 'app.asar.unpacked');
 const ffmpeg = require('fluent-ffmpeg');
 const util = require('util');
 const path = require('path');
