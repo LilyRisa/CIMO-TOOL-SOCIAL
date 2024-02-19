@@ -4,6 +4,7 @@ const { setupIPCMainHandlers } = require('./ipcMainHandler');
 const {cronTiktok} = require('./cron');
 const {getCronProgress} = require('./helper/cron');
 const { autoUpdater } = require('electron-updater');
+const { log } = require('console');
 
 let mainWindow;
 let tray;
@@ -39,10 +40,12 @@ app.on('ready', () => {
 
 
 // auto update
+autoUpdater.checkForUpdatesAndNotify();
+console.log(autoUpdater.checkForUpdatesAndNotify());
 
-mainWindow.once('ready-to-show', () => {
-  autoUpdater.checkForUpdatesAndNotify();
-});
+// mainWindow.once('ready-to-show', () => {
+//   autoUpdater.checkForUpdatesAndNotify();
+// });
 
 // autoUpdater.on('update-available', () => {
 //   mainWindow.webContents.send('update_available');
