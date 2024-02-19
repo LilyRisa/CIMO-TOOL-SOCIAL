@@ -3,14 +3,14 @@ $(document).ready(function(){
     const message = $('#message');
     const restartButton = $('#restart-button');
 
-    window.ipcRenderer.on('update_available', () => {
-        window.ipcRenderer.removeAllListeners('update_available');
+    window.ipcRender.receive('update_available', (event) => {
+        // window.ipcRender.removeAllListeners('update_available');
         message.text('A new update is available. Downloading now...');
         notification.removeClass('hidden');
       });
   
-      window.ipcRenderer.on('update_downloaded', () => {
-        window.ipcRenderer.removeAllListeners('update_downloaded');
+      window.ipcRender.receive('update_downloaded', () => {
+        // window.ipcRenderer.removeAllListeners('update_downloaded');
         message.text('Update Downloaded. It will be installed on restart. Restart now?');
         restartButton.removeClass('hidden');
         notification.removeClass('hidden');
@@ -21,5 +21,5 @@ function closeNotification() {
     notification.classList.add('hidden');
   }
   function restartApp() {
-    window.ipcRenderer.send('restart_app');
+    window.ipcRender.send('restart_app');
   }
