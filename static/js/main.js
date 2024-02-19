@@ -4,6 +4,7 @@ $(document).ready(function(){
     const restartButton = $('#restart-button');
 
     window.ipcRender.send('check_for_update');
+    console.log('check_for_update');
 
     window.ipcRender.receive('check_for_update', (event) => {
       console.log('check_for_update', event);
@@ -26,11 +27,13 @@ $(document).ready(function(){
         }
         
       });
+      
 });
 
 function closeNotification() {
-    notification.classList.add('hidden');
-  }
-  function restartApp() {
-    window.ipcRender.send('restart_app');
-  }
+  $('#notification').classList.add('hidden');
+}
+function restartApp() {
+  window.ipcRender.send('restart_app');
+}
+
