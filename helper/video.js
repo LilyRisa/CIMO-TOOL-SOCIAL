@@ -14,7 +14,6 @@ const mime = require('mime-types');
   
       // Kiểm tra xem có phải là thư mục hay không
       const isDirectory = fs.statSync(filePath).isDirectory();
-  
       if (isDirectory) {
         // Nếu là thư mục, đệ quy để kiểm tra thư mục con
         videoCount += countVideosInDirectory(filePath);
