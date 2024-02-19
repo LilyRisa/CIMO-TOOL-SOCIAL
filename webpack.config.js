@@ -14,7 +14,7 @@ const NODE_MODULE = path.resolve(__dirname, 'node_modules');
 
 const entry = {
     main: [
-        JS_DIR + '/bundle.js',
+        // JS_DIR + '/bundle.js',
         JS_DIR + '/tiktok.js',
         JS_DIR + '/facebook.js',
         JS_DIR + '/video_editing.js',

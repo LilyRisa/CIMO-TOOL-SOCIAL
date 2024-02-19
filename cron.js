@@ -2,15 +2,17 @@
 const { app} = require('electron');
 const schedule = require('node-schedule');
 const {uploadVideo} = require('./helper/tiktok')
+const {uploadVideoFB} = require('./helper/FB')
 const {getCronProgress} = require('./helper/cron')
-const {getCronTikTok, getRandomElement, getRandomText, checkFileExistence, createFile} = require('./helper/ultils')
+const {getCronTikTok, getCronfb, getRandomElement, getRandomText, checkFileExistence, createFile} = require('./helper/ultils')
 const {arrVideosInDirectory} = require('./helper/video');
 const { log } = require('console');
 const fs = require('fs').promises;
 const {scheduledJobs} = require('node-schedule');
+const path = require('path');
 
 
-function startCron(file, data, campain){
+function startCron(file, data, campain, type = null){
     
     console.log(campain);
 
@@ -62,7 +64,15 @@ function startCron(file, data, campain){
         }
         
         console.log(path_video, desc, obj_proxy);
-        let check = await uploadVideo(path_video, JSON.parse(data.cookie),desc, obj_proxy);
+
+        let check;
+
+        if(type == 'fb'){
+            check = await uploadVideoFB(path_video, JSON.parse(data.cookie),desc, obj_proxy, data.page_link);
+        }else{
+            check = await uploadVideo(path_video, JSON.parse(data.cookie),desc, obj_proxy);
+        }
+        
 
         if(check){
             campain.video.push(path_video);
@@ -102,6 +112,50 @@ async function cronTiktok() {
                 campain.uid = 'cron_'+Date.now().toString();
                 await createFile(app.getPath('userData') + '/MLM_GROUP/.campain/'+name_file, JSON.stringify(campain)) ;
 
+                startCron(name_file, data, campain.uid, 'fb');
+                // await fs.writeFile(app.getPath('userData') + '/MLM_GROUP/.campain/'+name_file, campain, 'utf-8');
+
+            }
+
+            campain = await fs.readFile(app.getPath('userData') + '/MLM_GROUP/.campain/'+name_file, 'utf-8');
+            campain = JSON.parse(campain);
+            if(campain.status){
+                startCron(app.getPath('userData') + '/MLM_GROUP/.campain/'+name_file, data, campain, 'fb');
+            }
+
+        }
+        return;
+    }
+
+    return;
+    
+}
+
+async function cronfb() {
+
+    let arr_file = await getCronfb();
+
+    let data = '';
+    
+
+    if(arr_file){
+        for(let file of arr_file){
+
+            data = await fs.readFile(file, 'utf-8');
+            data = JSON.parse(data);
+            console.log(data.crontab);
+
+            let name_file = path.basename(file);
+
+            let campain_file = await checkFileExistence(app.getPath('userData') + '/MLM_GROUP/.campain/'+name_file);
+            let campain = {};
+
+            if(!campain_file){ // check nếu không có file thì tạo và khởi tạo dữ liệu ban đầu
+                campain.status = true;
+                campain.video = [];
+                campain.uid = 'cron_'+Date.now().toString();
+                await createFile(app.getPath('userData') + '/MLM_GROUP/.campain/'+name_file, JSON.stringify(campain)) ;
+
                 startCron(name_file, data, campain.uid);
                 // await fs.writeFile(app.getPath('userData') + '/MLM_GROUP/.campain/'+name_file, campain, 'utf-8');
 
@@ -122,4 +176,5 @@ async function cronTiktok() {
 }
   
   
-  module.exports = { cronTiktok };
+  
+  module.exports = { cronTiktok , cronfb};

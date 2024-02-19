@@ -15,18 +15,18 @@
       </div>
 
     <div class="container">
-        <div class="row border-top border-bottom">
+        <div class="row border-top border-bottom my-2">
             <div class="col col-sm-6">
-                <button class="btn select-tik-folder font-12">Chọn thư mục chứa video</button>
+                <button class="mbutton gradient select-tik-folder font-12">Chọn thư mục chứa video</button>
             </div>
             <div class="col col-sm-6 offset-s6">
                 <p class="path-tik-video"></p>
                 <input type="text" id="tik-folder" disabled hidden>
             </div>
         </div>
-        <div class="row border-top border-bottom">
+        <div class="row border-top border-bottom my-2">
             <div class="col col-sm-6">
-                <button class="btn select-tik-proxy font-12">Chọn file proxy</button>
+                <button class="mbutton gradient select-tik-proxy font-12">Chọn file proxy</button>
                 <p class="font-12 text-green"><i>Có thể để trống nếu không dùng proxy</i></p>
             </div>
             <div class="col col-sm-6 offset-s6">
@@ -38,9 +38,9 @@
                 
             </div>
         </div>
-        <div class="row border-top border-bottom">
+        <div class="row border-top border-bottom my-2">
             <div class="col col-sm-6">
-                <button class="btn select-tik-cookie font-12">Chọn file cookie</button>
+                <button class="mbutton gradient select-tik-cookie font-12">Chọn file cookie</button>
             </div>
             <div class="col col-sm-6 offset-s6">
                 <p class="tik_path_cookie"></p>
@@ -50,9 +50,9 @@
                 </div>
             </div>
         </div>
-        <div class="row border-top border-bottom">
+        <div class="row border-top border-bottom my-2">
             <div class="col col-sm-6">
-                <button class="btn select-tik-desc font-12">Chọn file mô tả</button>
+                <button class="mbutton gradient select-tik-desc font-12">Chọn file mô tả</button>
                 <p class="font-12 text-green"><i>Lấy ngẫu nhiên các đoạn mô tả. Các đoạn mô tả phân tách bằng phím enter xuống dòng</i></p>
             </div>
             <div class="col col-sm-6 offset-s6">
@@ -63,18 +63,11 @@
                 </div>
             </div>
         </div>
-        <div class="row border-top border-bottom">
+        <div class="row border-top border-bottom my-2">
             <div class="col col-sm-6">
                 <div class="d-flex">
-                    <h2>Crontab</h2>
-                    <div class="switch mx-3" id="tik-cron">
-                        <label>
-                          Off
-                          <input type="checkbox" id="crontab_tik_status">
-                          <span class="lever"></span>
-                          On
-                        </label>
-                    </div>
+                    <h2 class="fs-18">Crontab</h2>
+                    
                     <p class="font-12"><i>Mỗi 1 lần chạy sẽ upload 1 video</i></p>
                 </div>
                 

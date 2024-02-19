@@ -1,0 +1,102 @@
+<div id="facebook-main p-3">
+
+    <div class="w-100 d-flex justify-content-center">
+        <h1><img src="./static/images/fb_reel.png" alt="" width="50px" height="50px" class="mr-2"> Auto upload facebook page reel</h1>
+    </div>
+
+    <div class="fixed-action-btn fixed-top-right">
+        <a class="btn-floating btn-large green">
+          <i class="large material-icons">menu</i>
+        </a>
+        <ul>
+          <li><a class="btn-floating red tooltipped" id="download_save_fb"  data-position="bottom" data-tooltip="Tải xuống file save"><i class="material-icons">download</i></a></li>
+          <li><a class="btn-floating yellow darken-1 tooltipped" id="upload_save_fb"    data-position="bottom" data-tooltip="Load file save"><i class="material-icons">publish</i></a></li>
+    
+        </ul>
+      </div>
+
+    <div class="container">
+        <div class="row border-top border-bottom my-2">
+            <div class="col col-sm-6">
+                <button class="mbutton gradient select-fb-folder font-12">Chọn thư mục chứa video</button>
+            </div>
+            <div class="col col-sm-6 offset-s6">
+                <p class="path-fb-video"></p>
+                <input type="text" id="fb-folder" disabled hidden>
+            </div>
+        </div>
+        <div class="row border-top border-bottom my-2">
+            <div class="col col-sm-6">
+                <button class="mbutton gradient select-fb-proxy font-12">Chọn file proxy</button>
+                <p class="font-12 text-green"><i>Có thể để trống nếu không dùng proxy</i></p>
+            </div>
+            <div class="col col-sm-6 offset-s6">
+                <p class="fb_path_proxy"></p>
+                <div class="input-field col-sm-12">
+                    <textarea name="proxy-list" id="proxy_list" cols="50" rows="50" class="materialize-textarea scroll p-0 m-0"></textarea>
+                    <label for="proxy_list">proxy</label>
+                </div>
+                
+            </div>
+        </div>
+        <div class="row border-top border-bottom my-2">
+            <div class="col col-sm-6">
+                <button class="mbutton gradient select-fb-cookie font-12">Chọn file cookie</button>
+            </div>
+            <div class="col col-sm-6 ">
+                <p class="fb_path_cookie"></p>
+                <div class="input-field col-sm-12">
+                    <textarea name="cookie_fb" id="cookie_fb" cols="50" rows="50" class="materialize-textarea scroll p-0 m-0"></textarea>
+                    <label for="cookie_fb">cookie</label>
+                </div>
+            </div>
+        </div>
+        <div class="row border-top border-bottom my-2">
+            <div class="col col-sm-6">
+                <label for="">Link page page</label>
+            </div>
+            <div class="col col-sm-6">
+                <div class="input-field col-sm-12">
+                    <input placeholder="https://www.facebook.com/profile.php?id=61550..." id="link_page" type="text" class="validate" name="link_page">
+                    <label for="link_page">cookie</label>
+                </div>
+            </div>
+        </div>
+        <div class="row border-top border-bottom my-2">
+            <div class="col col-sm-6">
+                <button class="mbutton gradient select-fb-desc font-12">Chọn file mô tả</button>
+                <p class="font-12 text-green"><i>Lấy ngẫu nhiên các đoạn mô tả. Các đoạn mô tả phân tách bằng phím enter xuống dòng</i></p>
+            </div>
+            <div class="col col-sm-6 ">
+                <p class="fb_path_desc"></p>
+                <div class="input-field col-sm-12">
+                    <textarea name="desc_fb" id="desc_fb" cols="50" rows="50" class="materialize-textarea scroll p-0 m-0"></textarea>
+                    <label for="desc_fb">Mô tả</label>
+                </div>
+            </div>
+        </div>
+        <div class="row border-top border-bottom">
+            <div class="col col-sm-6">
+                <div class="d-flex">
+                    <h2 class="fs-18">Crontab</h2>
+                    <p class="font-12"><i>Mỗi 1 lần chạy sẽ upload 1 video</i></p>
+                </div>
+                
+            </div>
+            <div class="col col-sm-6 ">
+                <div class="input-field">
+                    <i class="material-icons prefix">mode_edit</i>
+                    <textarea id="crontab_fb" class="materialize-textarea"></textarea>
+                    <label for="crontab_fb">Crontab</label>
+                  </div>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <button class="btn" id="fb-submit" type="submit" name="action">Lên lịch
+                <i class="material-icons right">send</i>
+              </button>
+        </div>
+    </div>
+
+
+</div>
