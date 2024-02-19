@@ -41,6 +41,7 @@ app.on('ready', () => {
 
 // auto update
 autoUpdater.checkForUpdatesAndNotify();
+
 console.log(autoUpdater.checkForUpdatesAndNotify());
 
 // mainWindow.once('ready-to-show', () => {
