@@ -5,13 +5,13 @@ $(document).ready(function(){
 
     window.ipcRender.receive('update_available', (event) => {
         // window.ipcRender.removeAllListeners('update_available');
-        message.text('A new update is available. Downloading now...');
+        message.text('Đã có bản cập nhật mới. Đang tải xuống ngay bây giờ...');
         notification.removeClass('hidden');
       });
   
       window.ipcRender.receive('update_downloaded', () => {
         // window.ipcRenderer.removeAllListeners('update_downloaded');
-        message.text('Update Downloaded. It will be installed on restart. Restart now?');
+        message.text('Đã tải xuống bản cập nhật. Nó sẽ được cài đặt khi khởi động lại. Khởi động lại bây giờ?');
         restartButton.removeClass('hidden');
         notification.removeClass('hidden');
       });
