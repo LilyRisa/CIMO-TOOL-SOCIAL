@@ -52,8 +52,9 @@
     "publish": [
       {
         "provider": "github",
-        "owner": "lilyrisa",
-        "repo": "https://github.com/LilyRisa/MLM-GROUP-COMPANY-LIMITED.git"
+        "owner": "LilyRisa",
+        "repo": "MLM-GROUP-COMPANY-LIMITED",
+        "token" : "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"
       }
     ]
   },
