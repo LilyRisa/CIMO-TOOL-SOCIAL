@@ -132,9 +132,9 @@ $(document).ready(function(){
       // lên lịch
       $(document).on('click', '#fb-submit', function(e){
         e.preventDefault();
-        if($('#fb-folder').val().length == 0 || $('#cookie_fb').val().length == 0 || $('#crontab_fb').val().length == 0){
+        if($('#fb-folder').val().length == 0 || $('#cookie_fb').val().length == 0 || $('#crontab_fb').val().length == 0 || $('#link_page').val().length == 0){
           M.toast({
-            html: "Thiếu dữ liệu cần thiết như folder video, cookie, crontab",
+            html: "Thiếu dữ liệu cần thiết như folder video, cookie, crontab, link page",
             displayLength: 10000,
             classes: 'red'
           });
