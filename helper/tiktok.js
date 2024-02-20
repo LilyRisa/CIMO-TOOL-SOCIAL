@@ -11,7 +11,7 @@ async function uploadVideo(pathVideo, cookie, desc, proxy = null){
   puppeteer.use(StealthPlugin())
     
     const browser = await puppeteer.launch({
-        headless: true,
+        headless: false,
         args: [
             '--no-sandbox',
             '--disable-background-networking',

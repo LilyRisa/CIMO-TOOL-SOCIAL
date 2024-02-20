@@ -14,7 +14,8 @@ const path = require('path');
 
 function startCron(file, data, campain, type = null){
     
-    console.log(campain);
+    console.log('campain',campain);
+    console.log('data',data);
 
     if(!campain.status){
         return;
@@ -68,7 +69,8 @@ function startCron(file, data, campain, type = null){
         let check;
 
         if(type == 'fb'){
-            check = await uploadVideoFB(path_video, JSON.parse(data.cookie),desc, obj_proxy, data.page_link);
+            let {status} = await uploadVideoFB(path_video, JSON.parse(data.cookie),desc, obj_proxy, data.page_link);
+            check = status;
         }else{
             check = await uploadVideo(path_video, JSON.parse(data.cookie),desc, obj_proxy);
         }
@@ -112,7 +114,7 @@ async function cronTiktok() {
                 campain.uid = 'cron_'+Date.now().toString();
                 await createFile(app.getPath('userData') + '/MLM_GROUP/.campain/'+name_file, JSON.stringify(campain)) ;
 
-                startCron(name_file, data, campain.uid, 'fb');
+                startCron(name_file, data, campain.uid);
                 // await fs.writeFile(app.getPath('userData') + '/MLM_GROUP/.campain/'+name_file, campain, 'utf-8');
 
             }
@@ -120,7 +122,7 @@ async function cronTiktok() {
             campain = await fs.readFile(app.getPath('userData') + '/MLM_GROUP/.campain/'+name_file, 'utf-8');
             campain = JSON.parse(campain);
             if(campain.status){
-                startCron(app.getPath('userData') + '/MLM_GROUP/.campain/'+name_file, data, campain, 'fb');
+                startCron(app.getPath('userData') + '/MLM_GROUP/.campain/'+name_file, data, campain);
             }
 
         }
@@ -156,7 +158,7 @@ async function cronfb() {
                 campain.uid = 'cron_'+Date.now().toString();
                 await createFile(app.getPath('userData') + '/MLM_GROUP/.campain/'+name_file, JSON.stringify(campain)) ;
 
-                startCron(name_file, data, campain.uid);
+                startCron(name_file, data, campain.uid, 'fb');
                 // await fs.writeFile(app.getPath('userData') + '/MLM_GROUP/.campain/'+name_file, campain, 'utf-8');
 
             }
@@ -164,7 +166,7 @@ async function cronfb() {
             campain = await fs.readFile(app.getPath('userData') + '/MLM_GROUP/.campain/'+name_file, 'utf-8');
             campain = JSON.parse(campain);
             if(campain.status){
-                startCron(app.getPath('userData') + '/MLM_GROUP/.campain/'+name_file, data, campain);
+                startCron(app.getPath('userData') + '/MLM_GROUP/.campain/'+name_file, data, campain, 'fb');
             }
 
         }

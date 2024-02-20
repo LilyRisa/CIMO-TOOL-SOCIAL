@@ -1,6 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 const mime = require('mime-types');
+const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path.replace('app.asar', 'app.asar.unpacked');
+const ffmpeg = require('fluent-ffmpeg');
+ffmpeg.setFfmpegPath(ffmpegPath);
 
  function countVideosInDirectory(directoryPath) {
     let videoCount = 0;
@@ -113,4 +116,17 @@ const mime = require('mime-types');
     return audios;
   }
 
-  module.exports = { countVideosInDirectory, arrVideosInDirectory, arrAudiosInDirectory, countAudiosInDirectory};
+  async function getVideoDuration(videoPath) {
+    return new Promise((resolve, reject) => {
+      ffmpeg.ffprobe(videoPath, (err, metadata) => {
+        if (err) {
+          reject('Lỗi khi kiểm tra thời lượng video: ' + err);
+        } else {
+          const durationInSeconds = metadata.format.duration;
+          resolve(durationInSeconds);
+        }
+      });
+    });
+  }
+
+  module.exports = { countVideosInDirectory, arrVideosInDirectory, arrAudiosInDirectory, countAudiosInDirectory, getVideoDuration};

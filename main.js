@@ -45,7 +45,7 @@ autoUpdater.checkForUpdatesAndNotify();
 autoUpdater.setFeedURL({
   provider: 'github',
   repo: 'MLM-GROUP-COMPANY-LIMITED',
-  owner: 'lilyrisa',
+  owner: 'LilyRisa',
   private: true,
   token: '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'
 })
