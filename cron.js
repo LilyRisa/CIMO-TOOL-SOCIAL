@@ -75,12 +75,23 @@ function startCron(file, data, campain, type = null){
             check = await uploadVideo(path_video, JSON.parse(data.cookie),desc, obj_proxy);
         }
         
-
+        console.log(check);
         if(check){
             campain.video.push(path_video);
+            if(!campain.video_fail.includes(path_video)){
+                let index = campain.video_fail.indexOf(path_video);
+                campain.video_fail.splice(index, 1);
+            }
             let save_progress = JSON.stringify(campain);
             await fs.writeFile(file, save_progress, 'utf-8');
             return;
+        }
+        console.log(campain);
+
+        if(!campain.video_fail.includes(path_video)){
+            campain.video_fail.push(path_video);
+            let save_progress = JSON.stringify(campain);
+            await fs.writeFile(file, save_progress, 'utf-8');
         }
         return;
     });
@@ -111,6 +122,7 @@ async function cronTiktok() {
             if(!campain_file){ // check nếu không có file thì tạo và khởi tạo dữ liệu ban đầu
                 campain.status = true;
                 campain.video = [];
+                campain.video_fail = [];
                 campain.uid = 'cron_'+Date.now().toString();
                 await createFile(app.getPath('userData') + '/MLM_GROUP/.campain/'+name_file, JSON.stringify(campain)) ;
 
@@ -155,6 +167,7 @@ async function cronfb() {
             if(!campain_file){ // check nếu không có file thì tạo và khởi tạo dữ liệu ban đầu
                 campain.status = true;
                 campain.video = [];
+                campain.video_fail = [];
                 campain.uid = 'cron_'+Date.now().toString();
                 await createFile(app.getPath('userData') + '/MLM_GROUP/.campain/'+name_file, JSON.stringify(campain)) ;
 

@@ -28,7 +28,7 @@ async function uploadVideoFB(pathVideo, cookie, desc, proxy = null, link_page){
   puppeteer.use(AdblockerPlugin());
     
     const browser = await puppeteer.launch({
-        headless: false,
+        headless: true,
         args: [
             '--no-sandbox',
             // '--disable-setuid-sandbox',
@@ -107,7 +107,6 @@ async function uploadVideoFB(pathVideo, cookie, desc, proxy = null, link_page){
         await sleep(3000);
         await browser.close();
         return {status: true};
-        
         
         
     } catch (error) {

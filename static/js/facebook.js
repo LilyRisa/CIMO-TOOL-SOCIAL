@@ -1,12 +1,50 @@
 const {renderHtml} = require('./bundle')
+const Swal = require('sweetalert2')
 
 
 $(document).ready(function(){
     window.ipcRender.send('crontab_fb');
+
+    $('.tooltipped').tooltip();
+
+    setInterval(()=>{
+      fb_load_campain();
+    }, 5000);
+
+    // $('#facebook-reel-navbar').on('click', function(e){
+    //     e.preventDefault();
+    //     $('.sidenav').sidenav('close');
+    //     renderHtml('#root', 'facebook.html', function(){
+    //       let elems = $('.fixed-action-btn')
+    //       M.FloatingActionButton.init(elems, {
+    //         direction: 'left',
+    //         hoverEnabled: false
+    //       });
+    //       let tooltip = $('.tooltipped')
+    //       M.Tooltip.init(tooltip, []);
+          
+    //     });
+    // });
+
     $('#facebook-reel-navbar').on('click', function(e){
+          e.preventDefault();
+          $('.sidenav').sidenav('close');
+          renderHtml('#root', 'facebook_list.html', function(){
+            let elems = $('.fixed-action-btn')
+            M.FloatingActionButton.init(elems, {
+              direction: 'left',
+              hoverEnabled: false
+            });
+            let tooltip = $('.tooltipped')
+            M.Tooltip.init(tooltip, []);
+            
+          });
+      });
+
+      $(document).on('click', '.back_facebook_list',function(e){
         e.preventDefault();
         $('.sidenav').sidenav('close');
-        renderHtml('#root', 'facebook.html', function(){
+        renderHtml('#root', 'facebook_list.html', function(){
           let elems = $('.fixed-action-btn')
           M.FloatingActionButton.init(elems, {
             direction: 'left',
@@ -17,6 +55,25 @@ $(document).ready(function(){
           
         });
     });
+
+      
+
+      $(document).on('click','.facebook_add', function(e){
+          e.preventDefault();
+          $('.sidenav').sidenav('close');
+          renderHtml('#root', 'facebook.html', function(){
+            let elems = $('.fixed-action-btn')
+            M.FloatingActionButton.init(elems, {
+              direction: 'left',
+              hoverEnabled: false
+            });
+            let tooltip = $('.tooltipped')
+            M.Tooltip.init(tooltip, []);
+            
+          });
+    });
+
+      
 
 
 
@@ -159,7 +216,7 @@ $(document).ready(function(){
               classes: 'green'
             });
             window.ipcRender.send('crontab_fb');
-            
+            $('.back_facebook_list').click();
             return;
           }
           if(!event.status && event.type == 'license'){
@@ -184,6 +241,61 @@ $(document).ready(function(){
   
       });
 
+      $(document).on('click', '.remove_fb_cron', function(){
+        Swal.fire({
+          title: "Hủy chiến dịch?",
+          text: "Thao tác này sẽ không thể hoàn tác",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Xóa"
+        }).then((result) => {
+          if (result.isConfirmed) {
+            let path = $(this).attr('data-path');
+            let uid = $(this).attr('data-uid');
+            window.ipcRender.send('remove_campain_fb',{path, uid});
+            window.ipcRender.receive('remove_campain_fb', (event) => {
+              if(event.status){
+                $(this).closest('.fb_cron_result_row').remove();
+              }else{
+                M.toast({
+                  html: "Lỗi không xác định:\n"+event.error,
+                  classes: 'red'
+                });
+              }
+            });
+            Swal.fire({
+              title: "Xóa thành công!",
+              text: "Bạn đã xóa thành công chiến dịch",
+              icon: "success"
+            });
+          }
+        });
+        
+      });
+
 
   
 });
+
+function fb_load_campain(){
+  window.ipcRender.send('fb_check_campain');
+  window.ipcRender.receive('fb_check_campain', (event) => {
+    let temp;
+      for(let item of event){
+        temp += `
+        <tr class="fb_cron_result_row">
+          <th scope="row">${item.uid}</th>
+          <td>${item.status ? `<span class="d-flex justify-content-center align-items-center"><i class=" material-icons">check</i> Hoàn thành</span>` : `<span class="d-flex justify-content-center align-items-center"><i class=" material-icons">sync</i> Đang chạy</span`}</td>
+          <td>Thành công: <b>${item.success}</b> | Lỗi: <b>${item.error}</b></td>
+          <td><button class="btn btn-danger remove_fb_cron mx-1 tooltipped" data-position="bottom" data-tooltip="Hủy bỏ chiến dịch" data-path="${item.path}" >Hủy</button><button class="btn btn-danger remove_fb_edit mx-1 tooltipped" data-position="bottom" data-tooltip="Sửa cookie" data-path="${item.path}">Update cookie</button></td>
+        </tr>
+        `;
+
+      }
+      $('.kqResult_fb').html(temp);
+  });
+
+  $('.kqResult_fb')
+}

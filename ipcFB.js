@@ -1,13 +1,15 @@
 const { ipcMain, dialog, app, remote } = require('electron');
 var fs = require('fs').promises;
 const cronParser = require('cron-parser');
-const {isValidCronExpression, checkFileExistence, createFile} = require('./helper/ultils')
+const {isValidCronExpression, checkFileExistence, createFile, getCronCampainfb} = require('./helper/ultils')
 const {checkLicense} = require('./helper/license')
 
 const {countVideosInDirectory, countAudiosInDirectory} = require('./helper/video');
 const { log } = require('console');
 const {cronfb} = require('./cron');
 const {videoEdit} = require('./helper/video_editing');
+const path = require('path');
+const {scheduledJobs} = require('node-schedule');
 
 
 function ipcMainFb(mainWindow){
@@ -69,6 +71,61 @@ function ipcMainFb(mainWindow){
     await cronfb();
   
   });
+
+
+  ipcMain.on('fb_check_campain', async (event, args) => {
+    let arr_camp = await getCronCampainfb();
+
+    if(arr_camp.length == 0){
+      event.reply('fb_check_campain', []);
+      return ;
+    }
+    let arr_result = [];
+    
+    for(let item of arr_camp){
+      let obj_result = {};
+      let data = await fs.readFile(item, 'utf-8');
+      data = JSON.parse(data);
+      obj_result.uid = data.uid;
+      obj_result.success = data.video.length;
+      obj_result.error = data.video_fail.length;
+      obj_result.path = item;
+
+      if(typeof data.phinish !== 'undefined'){
+        obj_result.status = true;
+      }else{
+        obj_result.status = false;
+      }
+      arr_result.push(obj_result);
+    }
+
+    event.reply('fb_check_campain', arr_result);
+    return ;
+    
+  });
+
+  ipcMain.on('remove_campain_fb', async (event, args) => {
+    let filename = path.basename(args.path);
+    try{
+      let check = await checkFileExistence(app.getPath('userData') + '/MLM_GROUP/.campain/'+filename);
+      if(check) await fs.unlink(app.getPath('userData') + '/MLM_GROUP/.campain/'+filename);
+      check = await checkFileExistence(app.getPath('userData') + '/MLM_GROUP/'+filename);
+      if(check) await fs.unlink(app.getPath('userData') + '/MLM_GROUP/'+filename);
+      event.reply('remove_campain_fb', {status: true});
+
+      if(typeof scheduledJobs[args.uid] != 'undefined'){
+        var my_job = scheduledJobs[unique_name];
+        my_job.cancel();
+     }
+      return;
+    }catch(e){
+      event.reply('remove_campain_fb', {status: false, error: e});
+    }
+    
+    
+  });
+
+
 
 }
     

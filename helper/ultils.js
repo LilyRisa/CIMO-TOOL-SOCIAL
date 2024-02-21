@@ -66,7 +66,7 @@ async function getCronTikTok(){
       const filteredFiles = arrFile.filter((file) => regex.test(file));
       return filteredFiles.map(file => app.getPath('userData') + '/MLM_GROUP/'+ file);
   }
-  if(checkFileExistence(app.getPath('userData') + '/MLM_GROUP/tikok_background.json')) return app.getPath('userData') + '/MLM_GROUP/tikok_background.json';
+  if(checkFileExistence(app.getPath('userData') + '/MLM_GROUP/tikok_background.json')) return [app.getPath('userData') + '/MLM_GROUP/tikok_background.json'];
   return [];
 
 }
@@ -79,7 +79,20 @@ async function getCronfb(){
       const filteredFiles = arrFile.filter((file) => regex.test(file));
       return filteredFiles.map(file => app.getPath('userData') + '/MLM_GROUP/'+ file);
   }
-  if(checkFileExistence(app.getPath('userData') + '/MLM_GROUP/fb_background.json')) return app.getPath('userData') + '/MLM_GROUP/fb_background.json';
+  if(checkFileExistence(app.getPath('userData') + '/MLM_GROUP/fb_background.json')) return [app.getPath('userData') + '/MLM_GROUP/fb_background.json'];
+  return [];
+
+}
+
+async function getCronCampainfb(){
+
+  if(checkLicense()){
+      let arrFile = await fs.readdir(app.getPath('userData') + '/MLM_GROUP/.campain');
+      const regex = /^fb_background.*\.json$/;
+      const filteredFiles = arrFile.filter((file) => regex.test(file));
+      return filteredFiles.map(file => app.getPath('userData') + '/MLM_GROUP/.campain/'+ file);
+  }
+  if(checkFileExistence(app.getPath('userData') + '/MLM_GROUP/.campain/fb_background.json')) return [app.getPath('userData') + '/MLM_GROUP/.campain/fb_background.json'];
   return [];
 
 }
@@ -102,4 +115,4 @@ function getRandomElement(array) {
   return array[randomIndex];
 }
 
-module.exports = { extractHashtags, isValidCronExpression, checkFileExistence, createFile, getCronTikTok, getRandomText, getRandomElement, getCronfb };
+module.exports = { extractHashtags, isValidCronExpression, checkFileExistence, createFile, getCronTikTok, getRandomText, getRandomElement, getCronfb, getCronCampainfb };
