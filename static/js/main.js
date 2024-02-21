@@ -1,3 +1,5 @@
+
+
 $(document).ready(function(){
     const notification = $('#notification');
     const message = $('#message');
@@ -28,6 +30,10 @@ $(document).ready(function(){
         
       });
       
+});
+
+window.ipcRender.receive('app_version', (event) => {
+  console.log('app_version', event);
 });
 
 function closeNotification() {

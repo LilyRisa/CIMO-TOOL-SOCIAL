@@ -7,11 +7,16 @@ const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 
 const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
 
+function getChromiumExecPath() {
+  return puppeteer.executablePath().replace('app.asar', 'app.asar.unpacked');
+}
+
 async function uploadVideo(pathVideo, cookie, desc, proxy = null){
   puppeteer.use(StealthPlugin())
     
     const browser = await puppeteer.launch({
         headless: true,
+        executablePath: getChromiumExecPath(),
         args: [
             '--no-sandbox',
             '--disable-background-networking',

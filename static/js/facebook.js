@@ -1,5 +1,6 @@
-const {renderHtml} = require('./bundle')
-const Swal = require('sweetalert2')
+const {renderHtml} = require('./bundle');
+const Swal = require('sweetalert2');
+
 
 
 $(document).ready(function(){

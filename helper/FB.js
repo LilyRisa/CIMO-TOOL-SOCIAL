@@ -11,6 +11,10 @@ const {getVideoDuration} = require('./video')
 
 const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
 
+function getChromiumExecPath() {
+    return puppeteer.executablePath().replace('app.asar', 'app.asar.unpacked');
+}
+
 async function uploadVideoFB(pathVideo, cookie, desc, proxy = null, link_page){
 
   console.log('pathVideo', pathVideo);
@@ -28,29 +32,24 @@ async function uploadVideoFB(pathVideo, cookie, desc, proxy = null, link_page){
   puppeteer.use(AdblockerPlugin());
     
     const browser = await puppeteer.launch({
-        headless: false,
+        headless: true,
+        executablePath: getChromiumExecPath(),
         args: [
             '--no-sandbox',
-            // '--disable-setuid-sandbox',
-            // '--disable-dev-shm-usage',
-            // '--disable-accelerated-2d-canvas',
-            // '--no-first-run',
-            // '--disable-gpu',
-            // // '--single-process',
-            // '--no-zygote',
-            // '--ignore-certificate-errors',
-            // '--disable-background-networking',
-            // '--disable-background-timer-throttling',
-            // '--disable-client-side-phishing-detection',
-            // '--disable-default-apps',
-            // // '--disable-extensions',
-            // '--disable-hang-monitor',
-            // '--disable-popup-blocking',
-            // '--disable-prompt-on-repost',
-            // '--disable-sync',
-            // '--disable-translate',
-            // '--metrics-recording-only',
-            // '--safebrowsing-disable-auto-update',
+            '--disable-background-networking',
+            '--disable-background-timer-throttling',
+            '--disable-client-side-phishing-detection',
+            '--disable-default-apps',
+            '--disable-dev-shm-usage',
+            // '--disable-extensions',
+            '--disable-hang-monitor',
+            '--disable-popup-blocking',
+            '--disable-prompt-on-repost',
+            '--disable-sync',
+            '--disable-translate',
+            '--metrics-recording-only',
+            '--no-first-run',
+            '--safebrowsing-disable-auto-update',
         ]
      });
      let page;

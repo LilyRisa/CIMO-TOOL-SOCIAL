@@ -6,10 +6,20 @@ const {getCronProgress} = require('./helper/cron');
 const { autoUpdater } = require('electron-updater');
 const { log } = require('console');
 
+const { updateElectronApp } = require('update-electron-app')
+
 let mainWindow;
 let tray;
 let iconpath = path.join(__dirname, '/static/images/icon.png');
 let isQuiting;
+
+autoUpdater.setFeedURL({
+  provider: 'github',
+  repo: 'MLM-GROUP-COMPANY-LIMITED',
+  owner: 'LilyRisa',
+  private: true,
+  token: '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'
+})
 
 app.on('ready', () => {
 
@@ -27,8 +37,13 @@ app.on('ready', () => {
     }
   });
   mainWindow.loadFile('index.html');
-  // mainWindow.webContents.openDevTools(); // debug
 
+  // autoUpdater.checkForUpdatesAndNotify();
+  updateElectronApp({
+    updateInterval: '1 hour',
+    logger: require('electron-log')
+  })
+  // mainWindow.webContents.openDevTools(); // debug
 //   // windows ẩn
 //   hideWindow = new BrowserWindow({
 //     show: false,
@@ -37,7 +52,6 @@ app.on('ready', () => {
 //     }
 //   });
 //   hideWindow.loadFile('null.html');
-
 
 // auto update
 // autoUpdater.checkForUpdatesAndNotify();

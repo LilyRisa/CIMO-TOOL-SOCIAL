@@ -50,6 +50,10 @@ function setupIPCMainHandlers(mainWindow) {
     autoUpdater.quitAndInstall();
   });
 
+  ipcMain.on('app_version', (event) => {
+    event.reply('app_version', { version: app.getVersion() });
+  });
+
 }
 
 module.exports = { setupIPCMainHandlers };

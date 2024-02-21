@@ -78,7 +78,7 @@ function startCron(file, data, campain, type = null){
         console.log(check);
         if(check){
             campain.video.push(path_video);
-            if(!campain.video_fail.includes(path_video)){
+            if(campain.video_fail.includes(path_video)){
                 let index = campain.video_fail.indexOf(path_video);
                 campain.video_fail.splice(index, 1);
             }
