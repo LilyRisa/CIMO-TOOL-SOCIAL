@@ -40,17 +40,17 @@ app.on('ready', () => {
 
 
 // auto update
-autoUpdater.checkForUpdatesAndNotify();
+// autoUpdater.checkForUpdatesAndNotify();
 
-autoUpdater.setFeedURL({
-  provider: 'github',
-  repo: 'MLM-GROUP-COMPANY-LIMITED',
-  owner: 'LilyRisa',
-  private: true,
-  token: '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'
-})
+// autoUpdater.setFeedURL({
+//   provider: 'github',
+//   repo: 'MLM-GROUP-COMPANY-LIMITED',
+//   owner: 'LilyRisa',
+//   private: true,
+//   token: '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'
+// })
 
-console.log(autoUpdater.checkForUpdatesAndNotify());
+// console.log(autoUpdater.checkForUpdatesAndNotify());
 
 // mainWindow.once('ready-to-show', () => {
 //   autoUpdater.checkForUpdatesAndNotify();
