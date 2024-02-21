@@ -38,7 +38,7 @@ function startCron(file, data, campain, type = null){
         
 
         while(true){  // kiểm tra xem video trong folder lấy ra có trùng với video đã thực thi ở campain
-            if(campain.video.length == arr_video.length) { // nếu video trong thư mục = video đã thực thi thì kết thúc
+            if((campain.video.length + campain.video_fail.length) == arr_video.length) { // nếu video trong thư mục = video đã thực thi thì kết thúc
                 campain.phinish = true;
                 let save_progress = JSON.stringify(campain);
                 await fs.writeFile(file, save_progress, 'utf-8');
