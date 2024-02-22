@@ -14,8 +14,8 @@ const path = require('path');
 
 function startCron(file, data, campain, type = null){
     
-    console.log('campain',campain);
-    console.log('data',data);
+    // console.log('campain',campain);
+    // console.log('data',data);
 
     if(!campain.status){
         return;

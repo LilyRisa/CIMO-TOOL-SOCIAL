@@ -97,6 +97,21 @@ async function getCronCampainfb(){
 
 }
 
+async function getCronCampaintiktok(){
+
+  if(checkLicense()){
+    
+      let arrFile = await fs.readdir(app.getPath('userData') + '/MLM_GROUP/.campain');
+      
+      const regex = /^tikok_background.*\.json$/;
+      const filteredFiles = arrFile.filter((file) => regex.test(file));
+      return filteredFiles.map(file => app.getPath('userData') + '/MLM_GROUP/.campain/'+ file);
+  }
+  if(checkFileExistence(app.getPath('userData') + '/MLM_GROUP/.campain/tiktok_background.json')) return [app.getPath('userData') + '/MLM_GROUP/.campain/tiktok_background.json'];
+  return [];
+
+}
+
 function getRandomText(text) {
   const lines = text.split('\n');
 
@@ -115,4 +130,4 @@ function getRandomElement(array) {
   return array[randomIndex];
 }
 
-module.exports = { extractHashtags, isValidCronExpression, checkFileExistence, createFile, getCronTikTok, getRandomText, getRandomElement, getCronfb, getCronCampainfb };
+module.exports = { extractHashtags, isValidCronExpression, checkFileExistence, createFile, getCronTikTok, getRandomText, getRandomElement, getCronfb, getCronCampainfb, getCronCampaintiktok };

@@ -1,0 +1,47 @@
+<div id="tiktok-main p-3 mx-3">
+    <div class="fixed-action-btn fixed-top-right tiktok_add">
+        <a class="btn-floating btn-large green ">
+            <i class="large material-icons">
+                add
+            </i>
+        </a>
+    </div>
+    <h1 class="d-flex justify-content-center fs-18 font-weight-bold align-items-center"><img src="./static/images/tik-tok.png" alt="" width="50px" height="50px" class="mr-2">  Danh sách tác vụ tiktok</h1>
+    <div class="border-top my-2">
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Tên chiến dịch</th>
+                <th scope="col">Trạng thái</th>
+                <th scope="col">Kết quả</th>
+                <th scope="col">Hành động</th>
+              </tr>
+            </thead>
+            <tbody class="kqResult_tiktok">
+
+            </tbody>
+          </table>
+    </div>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Sửa cookie</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <input type="text" hidden name="tiktok_list_path">
+        <div class="cookie_tiktok_edit_list form-group">
+          <textarea name="cookie_tiktok_edit_list" id="" cols="30" rows="10" class="form-control"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary cookie_tiktok_edit_close" data-dismiss="modal">Đóng</button>
+        <button type="button" class="btn btn-primary cookie_tiktok_edit_submit">Lưu</button>
+      </div>
+    </div>
+  </div>
+</div>
