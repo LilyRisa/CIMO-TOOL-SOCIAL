@@ -120,7 +120,7 @@ ffmpeg.setFfmpegPath(ffmpegPath);
     return new Promise((resolve, reject) => {
       ffmpeg.ffprobe(videoPath, (err, metadata) => {
         if (err) {
-          reject('Lỗi khi kiểm tra thời lượng video: ' + err);
+          reject('Lỗi khi kiểm tra thời lượng video: ' + videoPath);
         } else {
           const durationInSeconds = metadata.format.duration;
           resolve(durationInSeconds);

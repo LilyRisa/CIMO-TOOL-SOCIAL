@@ -276,6 +276,41 @@ $(document).ready(function(){
         
       });
 
+      $(document).on('click', '.editcoookie_fb_edit', function(){
+        let path = $(this).attr('data-path');
+        console.log(path);
+        $('#exampleModal .modal-body input[name=fb_list_path]').val(path);
+
+        window.ipcRender.send('fb_get_cookie_campain_path', path);
+        window.ipcRender.receive('fb_get_cookie_campain_path', (data) => {
+          console.log(data);
+          let cookie = data;
+          $('#exampleModal .modal-body input[name=cookie_fb_edit_list]').val(cookie);
+          $('#exampleModal').modal('show');
+
+        });      
+      });
+
+      $(document).on('click', '.cookie_fb_edit_submit', function(){
+        let path = $('input[name=fb_list_path]').val();
+        let cookie = $('textarea[name=cookie_fb_edit_list]').val();
+        console.log('path', path);
+        console.log('cookie', cookie);
+        if(path.length == 0 || cookie.length == 0){
+          M.toast({
+            html: "Thiếu dữ liệu",
+            classes: 'red'
+          });
+          return;
+        }
+        window.ipcRender.send('fb_set_cookie_campain_path', {path, cookie});
+        $('.cookie_fb_edit_close').click();
+        Swal.fire({
+          title: "Update thành công!",
+          text: "Bạn đã cập nhật thành công chiến dịch",
+          icon: "success"
+        });
+      });
 
   
 });
@@ -290,7 +325,7 @@ function fb_load_campain(){
           <th scope="row">${item.uid}</th>
           <td>${item.status ? `<span class="d-flex justify-content-center align-items-center"><i class=" material-icons">check</i> Hoàn thành</span>` : `<span class="d-flex justify-content-center align-items-center"><i class=" material-icons">sync</i> Đang chạy</span`}</td>
           <td>Thành công: <b>${item.success}</b> | Lỗi: <b>${item.error}</b></td>
-          <td><button class="btn btn-danger remove_fb_cron mx-1 tooltipped" data-position="bottom" data-tooltip="Hủy bỏ chiến dịch" data-path="${item.path}" >Hủy</button><button class="btn btn-danger remove_fb_edit mx-1 tooltipped" data-position="bottom" data-tooltip="Sửa cookie" data-path="${item.path}">Update cookie</button></td>
+          <td><button class="btn btn-danger remove_fb_cron mx-1 tooltipped" data-position="bottom" data-tooltip="Hủy bỏ chiến dịch" data-path="${item.path}" >Hủy</button><button class="btn btn-danger editcoookie_fb_edit mx-1 tooltipped" data-position="bottom" data-tooltip="Sửa cookie" data-path="${item.path}">Update cookie</button></td>
         </tr>
         `;
 
@@ -298,5 +333,4 @@ function fb_load_campain(){
       $('.kqResult_fb').html(temp);
   });
 
-  $('.kqResult_fb')
 }

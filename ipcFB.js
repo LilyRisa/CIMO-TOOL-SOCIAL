@@ -125,6 +125,23 @@ function ipcMainFb(mainWindow){
     
   });
 
+  ipcMain.on('fb_get_cookie_campain_path', async (event, args)=>{
+    let filename = path.basename(args);
+    let data = await fs.readFile(app.getPath('userData') + '/MLM_GROUP/'+filename, 'utf-8');
+    data = JSON.parse(data);
+    event.reply('fb_get_cookie_campain_path', {status: true, data: data.cookie});
+  });
+
+  ipcMain.on('fb_set_cookie_campain_path', async (event, args)=>{
+    let {path, cookie} = args;
+    let filename = path.basename(path);
+    let data = await fs.readFile(app.getPath('userData') + '/MLM_GROUP/'+filename, 'utf-8');
+    data = JSON.parse(data);
+    data.cookie = cookie
+    await fs.writeFile(app.getPath('userData') + '/MLM_GROUP/'+filename, JSON.stringify(data), 'utf-8');
+    // event.reply('fb_get_cookie_campain_path', {status: true, data: data.cookie});
+  });
+
 
 
 }
