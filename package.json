@@ -61,6 +61,10 @@
       "node_modules/@puppeteer/*"
     ],
     "appId": "com.mlmgroup.tool",
+    "win": {
+      "icon": "./static/images/icon.png"
+    },
+    "productName": "MLMGROUP",
     "publish": [
       {
         "provider": "github",
