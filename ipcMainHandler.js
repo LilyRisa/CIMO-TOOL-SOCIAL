@@ -13,6 +13,7 @@ const {ipcMainTikTok} = require('./ipcTiktok');
 const {ipcMainEditvideo} = require('./ipcEditvideo');
 const {ipcMainFile} = require('./ipcFile');
 const {ipcMainFb} = require('./ipcFB');
+const {ipcMainYT} = require('./ipcYT');
 const { autoUpdater } = require('electron-updater');
 
 
@@ -29,6 +30,9 @@ function setupIPCMainHandlers(mainWindow) {
   
   // fb ipc
   ipcMainFb(mainWindow);
+
+  // YT ipc
+  ipcMainYT(mainWindow);
 
 
   ipcMain.on('open_devtool', (event, args) => {

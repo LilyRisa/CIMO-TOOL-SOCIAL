@@ -17,6 +17,7 @@ const entry = {
         // JS_DIR + '/bundle.js',
         JS_DIR + '/tiktok.js',
         JS_DIR + '/facebook.js',
+        JS_DIR + '/youtube.js',
         JS_DIR + '/video_editing.js',
         CSS_DIR + '/bundle.scss',
     ]

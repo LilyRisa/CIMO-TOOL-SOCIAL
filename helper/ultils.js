@@ -84,6 +84,19 @@ async function getCronfb(){
 
 }
 
+async function getCronYT(){
+
+  if(checkLicense()){
+      let arrFile = await fs.readdir(app.getPath('userData') + '/MLM_GROUP');
+      const regex = /^yt_background.*\.json$/;
+      const filteredFiles = arrFile.filter((file) => regex.test(file));
+      return filteredFiles.map(file => app.getPath('userData') + '/MLM_GROUP/'+ file);
+  }
+  if(checkFileExistence(app.getPath('userData') + '/MLM_GROUP/fb_background.json')) return [app.getPath('userData') + '/MLM_GROUP/fb_background.json'];
+  return [];
+
+}
+
 async function getCronCampainfb(){
 
   if(checkLicense()){
@@ -93,6 +106,19 @@ async function getCronCampainfb(){
       return filteredFiles.map(file => app.getPath('userData') + '/MLM_GROUP/.campain/'+ file);
   }
   if(checkFileExistence(app.getPath('userData') + '/MLM_GROUP/.campain/fb_background.json')) return [app.getPath('userData') + '/MLM_GROUP/.campain/fb_background.json'];
+  return [];
+
+}
+
+async function getCronCampainYT(){
+
+  if(checkLicense()){
+      let arrFile = await fs.readdir(app.getPath('userData') + '/MLM_GROUP/.campain');
+      const regex = /^yt_background.*\.json$/;
+      const filteredFiles = arrFile.filter((file) => regex.test(file));
+      return filteredFiles.map(file => app.getPath('userData') + '/MLM_GROUP/.campain/'+ file);
+  }
+  if(checkFileExistence(app.getPath('userData') + '/MLM_GROUP/.campain/yt_background.json')) return [app.getPath('userData') + '/MLM_GROUP/.campain/yt_background.json'];
   return [];
 
 }
@@ -130,4 +156,4 @@ function getRandomElement(array) {
   return array[randomIndex];
 }
 
-module.exports = { extractHashtags, isValidCronExpression, checkFileExistence, createFile, getCronTikTok, getRandomText, getRandomElement, getCronfb, getCronCampainfb, getCronCampaintiktok };
+module.exports = { extractHashtags, isValidCronExpression, checkFileExistence, createFile, getCronTikTok, getRandomText, getRandomElement, getCronfb, getCronCampainfb, getCronCampaintiktok, getCronYT, getCronCampainYT };

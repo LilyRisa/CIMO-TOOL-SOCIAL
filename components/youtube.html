@@ -1,6 +1,6 @@
-<div id="facebook-main p-3">
+<div id="youtube-main p-3">
 
-    <div class="left-60 back_facebook_list">
+    <div class="left-60 back_youtube_list">
         <a class="btn-floating btn-large white ">
             <i class="large material-icons color-black">
                 arrow_back
@@ -9,7 +9,7 @@
     </div>
 
     <div class="w-100 d-flex justify-content-center">
-        <h1><img src="./static/images/fb_reel.png" alt="" width="50px" height="50px" class="mr-2"> Auto upload facebook page reel</h1>
+        <h1><img src="./static/images/yt.png" alt="" width="50px" height="50px" class="mr-2"> Auto upload youtube page reel</h1>
     </div>
 
     <div class="fixed-action-btn fixed-top-right">
@@ -17,8 +17,8 @@
           <i class="large material-icons">menu</i>
         </a>
         <ul>
-          <li><a class="btn-floating red tooltipped" id="download_save_fb"  data-position="bottom" data-tooltip="Tải xuống file save"><i class="material-icons">download</i></a></li>
-          <li><a class="btn-floating yellow darken-1 tooltipped" id="upload_save_fb"    data-position="bottom" data-tooltip="Load file save"><i class="material-icons">publish</i></a></li>
+          <li><a class="btn-floating red tooltipped" id="download_save_yt"  data-position="bottom" data-tooltip="Tải xuống file save"><i class="material-icons">download</i></a></li>
+          <li><a class="btn-floating yellow darken-1 tooltipped" id="upload_save_yt"    data-position="bottom" data-tooltip="Load file save"><i class="material-icons">publish</i></a></li>
     
         </ul>
       </div>
@@ -26,20 +26,20 @@
     <div class="container">
         <div class="row border-top border-bottom my-2">
             <div class="col col-sm-6">
-                <button class="mbutton gradient select-fb-folder font-12">Chọn thư mục chứa video</button>
+                <button class="mbutton gradient select-yt-folder font-12">Chọn thư mục chứa video</button>
             </div>
             <div class="col col-sm-6 offset-s6">
-                <p class="path-fb-video"></p>
-                <input type="text" id="fb-folder" disabled hidden>
+                <p class="path-yt-video"></p>
+                <input type="text" id="yt-folder" disabled hidden>
             </div>
         </div>
         <div class="row border-top border-bottom my-2">
             <div class="col col-sm-6">
-                <button class="mbutton gradient select-fb-proxy font-12">Chọn file proxy</button>
+                <button class="mbutton gradient select-yt-proxy font-12">Chọn file proxy</button>
                 <p class="font-12 text-green"><i>Có thể để trống nếu không dùng proxy</i></p>
             </div>
             <div class="col col-sm-6 offset-s6">
-                <p class="fb_path_proxy"></p>
+                <p class="yt_path_proxy"></p>
                 <div class="input-field col-sm-12">
                     <textarea name="proxy-list" id="proxy_list" cols="50" rows="50" class="materialize-textarea scroll p-0 m-0"></textarea>
                     <label for="proxy_list">proxy</label>
@@ -49,13 +49,13 @@
         </div>
         <div class="row border-top border-bottom my-2">
             <div class="col col-sm-6">
-                <button class="mbutton gradient select-fb-cookie font-12">Chọn file cookie</button>
+                <button class="mbutton gradient select-yt-cookie font-12">Chọn file cookie</button>
             </div>
             <div class="col col-sm-6 ">
-                <p class="fb_path_cookie"></p>
+                <p class="yt_path_cookie"></p>
                 <div class="input-field col-sm-12">
-                    <textarea name="cookie_fb" id="cookie_fb" cols="50" rows="50" class="materialize-textarea scroll p-0 m-0"></textarea>
-                    <label for="cookie_fb">cookie</label>
+                    <textarea name="cookie_yt" id="cookie_yt" cols="50" rows="50" class="materialize-textarea scroll p-0 m-0"></textarea>
+                    <label for="cookie_yt">cookie</label>
                 </div>
             </div>
         </div>
@@ -65,21 +65,34 @@
             </div>
             <div class="col col-sm-6">
                 <div class="input-field col-sm-12">
-                    <input placeholder="https://www.facebook.com/profile.php?id=61550..." id="link_page" type="text" class="validate" name="link_page">
+                    <input placeholder="https://www.youtube.com/channel/UCb0RH3tq-ltNnTD..." id="link_page" type="text" class="validate" name="link_page">
                     <label for="link_page">link</label>
                 </div>
             </div>
         </div>
         <div class="row border-top border-bottom my-2">
             <div class="col col-sm-6">
-                <button class="mbutton gradient select-fb-desc font-12">Chọn file mô tả</button>
+                <button class="mbutton gradient select-yt-title font-12">Chọn file tiêu đề</button>
+                <p class="font-12 text-green"><i>Lấy ngẫu nhiên các đoạn tiêu đề. Các đoạn tiêu đề phân tách bằng phím enter xuống dòng</i></p>
+            </div>
+            <div class="col col-sm-6 ">
+                <p class="yt_path_title"></p>
+                <div class="input-field col-sm-12">
+                    <textarea name="title_yt" id="title_yt" cols="50" rows="50" class="materialize-textarea scroll p-0 m-0"></textarea>
+                    <label for="title_yt">Mô tả</label>
+                </div>
+            </div>
+        </div>
+        <div class="row border-top border-bottom my-2">
+            <div class="col col-sm-6">
+                <button class="mbutton gradient select-yt-desc font-12">Chọn file mô tả</button>
                 <p class="font-12 text-green"><i>Lấy ngẫu nhiên các đoạn mô tả. Các đoạn mô tả phân tách bằng phím enter xuống dòng</i></p>
             </div>
             <div class="col col-sm-6 ">
-                <p class="fb_path_desc"></p>
+                <p class="yt_path_desc"></p>
                 <div class="input-field col-sm-12">
-                    <textarea name="desc_fb" id="desc_fb" cols="50" rows="50" class="materialize-textarea scroll p-0 m-0"></textarea>
-                    <label for="desc_fb">Mô tả</label>
+                    <textarea name="desc_yt" id="desc_yt" cols="50" rows="50" class="materialize-textarea scroll p-0 m-0"></textarea>
+                    <label for="desc_yt">Mô tả</label>
                 </div>
             </div>
         </div>
@@ -94,13 +107,13 @@
             <div class="col col-sm-6 ">
                 <div class="input-field">
                     <i class="material-icons prefix">mode_edit</i>
-                    <textarea id="crontab_fb" class="materialize-textarea"></textarea>
-                    <label for="crontab_fb">Crontab</label>
+                    <textarea id="crontab_yt" class="materialize-textarea"></textarea>
+                    <label for="crontab_yt">Crontab</label>
                   </div>
             </div>
         </div>
         <div class="row d-flex justify-content-center">
-            <button class="btn" id="fb-submit" type="submit" name="action">Lên lịch
+            <button class="btn" id="yt-submit" type="submit" name="action">Lên lịch
                 <i class="material-icons right">send</i>
               </button>
         </div>
