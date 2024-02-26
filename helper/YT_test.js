@@ -87,30 +87,79 @@ async function uploadVideoFB(pathVideo, cookie, desc, title, proxy = null, link_
         console.log('>>> load video in progress');
         await sleep(2000);
 
-        // let next_step = 'form > div > div > div:first-child > div > div:nth-child(3) > div:nth-child(2) > div';
-        // let next_step2 = 'form > div > div > div:nth-child(1) > div > div:nth-child(3) > div:nth-child(2) > div';
+        //title
+        let title_elecment = '.title #container-content';
+        await page.waitForSelector(title_elecment);
+        await sleep(2000);
+        await page.hover(title_elecment);
+        await page.focus(title_elecment);
 
-        // await page.click(next_step);
-        // await sleep(2000);
-        // let step2 = await page.$$(next_step2)
-        // console.log(step2);
-        // await step2[1].click();
+        await page.keyboard.down('Control');
+        await page.keyboard.press('A');
+        await page.keyboard.up('Control');
+        console.log("delete");
+        await sleep(1000);
+        // Nhấn nút Delete
+        await page.keyboard.press('Delete');
+        await page.keyboard.type(title);
+        await sleep(2000);
 
-        // const desc_element = 'form > div > div > div:first-child > div > div:nth-child(2) > div:first-child > div:nth-child(2) > div > div > div > div > div:first-child > div:first-child > div:first-child > div';
-        // await page.waitForSelector(desc_element);
+        // desc
+        let desc_elecment = '.description #description-container';
+        await page.waitForSelector(desc_elecment);
+        const desc_q = await page.$$(desc_elecment);
+        await desc_q[0].click();
+        await sleep(2000);
+        await page.hover(desc_elecment);
+        await page.focus(desc_elecment);
 
-        // await page.hover(desc_element);
-        // await page.focus(desc_element);
-        // await page.keyboard.type(desc );
-        // await sleep(2000);
-        // let next_step3= 'form > div > div > div:nth-child(1) > div > div:nth-child(3) > div:nth-child(2) > div';
-        // await page.waitForSelector(next_step3);
-        // let step3 = await page.$$(next_step3);
-        // await step3[1].click();
-        // await sleep(3000);
-        // await browser.close();
-        // return {status: true};
-        
+        await page.keyboard.down('Control');
+        await page.keyboard.press('A');
+        await page.keyboard.up('Control');
+        console.log("delete");
+        await sleep(1000);
+        // Nhấn nút Delete
+        await page.keyboard.press('Delete');
+        await page.keyboard.type(desc);
+        await sleep(2000);
+
+        let child = 'tp-yt-paper-radio-button[name=VIDEO_MADE_FOR_KIDS_NOT_MFK] #radioContainer';
+        await page.waitForSelector(child);
+        const child_q = await page.$$(desc_elecment);
+        await child_q[0].click();
+
+        // kiểm tra hidden
+        let next_step = '.ytcp-uploads-dialog > #next-button';
+        await page.waitForSelector(next_step);
+        const isHidden = await page.evaluate((next_step) => {
+            const div = document.querySelector(next_step);
+            return div ? div.hasAttribute('hidden') : false;
+          }, next_step);
+
+        if(isHidden){
+            console.log('quá hạn ngạch');
+            await browser.close();
+            return {status: false, errno: 'exceed daily quota'};
+        }
+
+        const next_q = await page.$$(next_step);
+        await next_q[0].click();
+        await sleep(1000);
+        await next_q[0].click();
+        await sleep(1000);
+        await next_q[0].click();
+        await sleep(1000);
+        let done_step = '.ytcp-uploads-dialog > #done-button';
+        const done_q = await page.$$(done_step);
+        console.log('click done');
+        console.log(done_q);
+        await done_q[0].click();
+
+        let done_share = '.ytcp-uploads-still-processing-dialog';
+        await page.waitForSelector(done_share);
+        await sleep(25000);
+        await browser.close();
+        return {status: true};
         
         
     } catch (error) {
@@ -136,6 +185,6 @@ function get_channel_id(link){
     cookie = JSON.parse(file.cookie);
     console.log(cookie[1]);
     
-    await uploadVideoFB('C:\\Users\\minhm\\Desktop\\video test\\save\\sss.mp4', cookie, 'test asjkdhksajd',"title test 1", {}, 'https://www.youtube.com/channel/UCb0RH3tq-ltNnTDyODI_Inw');
+    await uploadVideoFB('C:\\Users\\minhm\\Desktop\\test\\ss.mp4', cookie, 'test asjkdhksajd',"title test 1", {}, 'https://www.youtube.com/channel/UC_meibmOYXl5Zulg7f_hEEw');
 }
 main();

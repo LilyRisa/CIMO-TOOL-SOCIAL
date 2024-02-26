@@ -133,11 +133,11 @@ function ipcMainYT(mainWindow){
   });
 
   ipcMain.on('yt_set_cookie_campain_path', async (event, args)=>{
-    let {path, cookie} = args;
-    let filename = path.basename(path);
+    // let {path, cookie} = args;
+    let filename = path.basename(args.path);
     let data = await fs.readFile(app.getPath('userData') + '/MLM_GROUP/'+filename, 'utf-8');
     data = JSON.parse(data);
-    data.cookie = cookie
+    data.cookie = args.cookie
     await fs.writeFile(app.getPath('userData') + '/MLM_GROUP/'+filename, JSON.stringify(data), 'utf-8');
     // event.reply('yt_get_cookie_campain_path', {status: true, data: data.cookie});
   });
