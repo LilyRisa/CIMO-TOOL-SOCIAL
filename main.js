@@ -155,7 +155,7 @@ function toggleWindow() {
       let token = user_file.token;
       try {
           // Gọi API kiểm tra token ở đây
-          const response = await axios.get('http://mlm.cm/api/check-token', {
+          const response = await axios.get('https://fastbilliards.com/api/check-token', {
               headers: {
                   Authorization: 'Bearer ' + token
               }
