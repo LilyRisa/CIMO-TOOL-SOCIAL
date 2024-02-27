@@ -100,10 +100,14 @@ async function getCronYT(){
 async function getCronCampainfb(){
 
   if(checkLicense()){
+    try{
       let arrFile = await fs.readdir(app.getPath('userData') + '/MLM_GROUP/.campain');
       const regex = /^fb_background.*\.json$/;
       const filteredFiles = arrFile.filter((file) => regex.test(file));
       return filteredFiles.map(file => app.getPath('userData') + '/MLM_GROUP/.campain/'+ file);
+    }catch (e){
+      return [];
+    }
   }
   if(checkFileExistence(app.getPath('userData') + '/MLM_GROUP/.campain/fb_background.json')) return [app.getPath('userData') + '/MLM_GROUP/.campain/fb_background.json'];
   return [];
@@ -113,10 +117,14 @@ async function getCronCampainfb(){
 async function getCronCampainYT(){
 
   if(checkLicense()){
+    try{
       let arrFile = await fs.readdir(app.getPath('userData') + '/MLM_GROUP/.campain');
       const regex = /^yt_background.*\.json$/;
       const filteredFiles = arrFile.filter((file) => regex.test(file));
       return filteredFiles.map(file => app.getPath('userData') + '/MLM_GROUP/.campain/'+ file);
+    }catch (e){
+      return [];
+    }
   }
   if(checkFileExistence(app.getPath('userData') + '/MLM_GROUP/.campain/yt_background.json')) return [app.getPath('userData') + '/MLM_GROUP/.campain/yt_background.json'];
   return [];
@@ -126,12 +134,15 @@ async function getCronCampainYT(){
 async function getCronCampaintiktok(){
 
   if(checkLicense()){
-    
+    try{
       let arrFile = await fs.readdir(app.getPath('userData') + '/MLM_GROUP/.campain');
       
       const regex = /^tikok_background.*\.json$/;
       const filteredFiles = arrFile.filter((file) => regex.test(file));
       return filteredFiles.map(file => app.getPath('userData') + '/MLM_GROUP/.campain/'+ file);
+    }catch (e){
+      return [];
+    }
   }
   if(checkFileExistence(app.getPath('userData') + '/MLM_GROUP/.campain/tiktok_background.json')) return [app.getPath('userData') + '/MLM_GROUP/.campain/tiktok_background.json'];
   return [];

@@ -1,0 +1,36 @@
+<div id="video-downing-main p-3">
+    <h1 class="my-2 d-flex justify-content-center fs-18 font-weight-bold align-items-center"><img src="./static/images/down.png" alt="" width="50px" height="50px" class="mr-2">  Tải xuống video hàng loạt (Tiktok, Douyin, Facebook, Instagram, X)</h1>
+
+    <div class="row">
+        <div class="col-6 file_selected">
+            <button class="mbutton gradient" id="video_file_selected">Chọn file chứa liên kết video </button>
+            <ul>
+                <li>Tổng số link: <p class="file_result d-inline font-weight-bold"></p></li>
+            </ul>
+            <input type="text" hidden id="file_video_down_selected_input">
+        </div>
+
+        <div class="col-6 folder_selected_down_save">
+            <button class="mbutton gradient" id="video_folder_down_saved">Chọn thư mục lưu</button>
+            <ul>
+                <li>Thư mục: <p class="folder_down_result d-inline font-weight-bold"></p></li>
+            </ul>
+            <input type="text" hidden id="folder_video_down_saved_input">
+        </div>
+        <div class="col-12 d-flex justify-content-center">
+            <button class="mbutton glow" id="exec_video_down">Thực thi</button>
+        </div>
+        <div class="down_video_result d-flex justify-content-center mx-3 px-1">
+            <div class="my-1">
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                <div class="video_down_result_text">
+                </div>
+            </div>
+            
+           
+        </div>
+    </div>
+
+</div>

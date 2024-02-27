@@ -179,4 +179,13 @@ async function videoEdit(args, func){
     
 }
 
-module.exports = {videoEdit}
+async function downVideo(filepath, folder_save, func){
+    let data = await fs.readFile(filepath, 'utf-8');
+    data = data.split("\n");
+    data = data.filter(element => element != null && element !== "");
+    for(let link of data){
+        
+    }
+}
+
+module.exports = {videoEdit, downVideo}

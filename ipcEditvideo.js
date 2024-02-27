@@ -7,7 +7,7 @@ const {checkLicense} = require('./helper/license')
 const {countVideosInDirectory, countAudiosInDirectory} = require('./helper/video');
 const { log } = require('console');
 const {cronTiktok} = require('./cron');
-const {videoEdit} = require('./helper/video_editing');
+const {videoEdit, downVideo} = require('./helper/video_editing');
 
 
 function ipcMainEditvideo(mainWindow){
@@ -25,6 +25,15 @@ ipcMain.on('editvideo', async (event, args) => {
     }
   
   });
+
+ipcMain.on('downvideo', async (event, args) => {
+    let status = await downVideo(args.file, args.save_video, function(path, phantram, count, errono){
+      event.reply('downvideo_reply', {path, phantram, count, errono});
+    });
+    if(status){
+      event.reply('downvideo_reply_done', {status : true});
+    }
+});
 
 }
     

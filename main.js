@@ -188,7 +188,9 @@ async function checkVersion(mainWindow){
     let { data } = await axios.get('https://api.github.com/repos/Lilyrisa/mlm_tool_release/releases');
 
     data = data[0];
-    if(data != app.getVersion()){
+    console.log(data.name);
+    console.log(app.getVersion());
+    if(data.name != app.getVersion()){
       mainWindow.loadFile('null.html');
       return false
     }

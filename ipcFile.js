@@ -66,7 +66,10 @@ function ipcMainFile(mainWindow){
             const filePath = result.filePaths[0];
             console.log(filePath);
             const data = await fs.readFile(filePath, 'utf-8');
-            event.reply('openFile'+args, {filePath, data});
+            let count = data.split("\n");
+            count = count.filter(element => element != null && element !== "");
+            count = count.length
+            event.reply('openFile'+args, {filePath, data, count});
           }
         }).catch((err) => {
           console.error(err);
