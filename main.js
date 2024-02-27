@@ -161,7 +161,7 @@ function toggleWindow() {
               }
           });
 
-          if (response.status) {
+          if (response.data.status) {
               // Nếu token hợp lệ, load trang main.html
               mainWindow.loadFile('index.html');
           } else {

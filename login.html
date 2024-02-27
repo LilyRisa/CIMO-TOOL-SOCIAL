@@ -202,7 +202,10 @@ body {
       <script>
         
         $(document).ready(function(){
+
           $('#submit').on('click', function(e){
+            $(this).attr('disabled');
+            let that = this;
             e.preventDefault();
             let email = $('input[name=email]').val();
             let password = $('input[name=password]').val();
@@ -214,36 +217,26 @@ body {
               });
               return;
             }
-            $.ajax({
-              url: 'https://fastbilliards.com/api/login',
-              type: 'post',
-              data:{
-                email, password
-              }
-            }).done(resp => {
-              if(typeof resp.token !== 'undefined'){
-                // window.ipcRender.send('login_success',resp.token);
-                Swal.fire({
-                  title: "Đăng nhập thành công",
-                  icon: "success"
-                }).then((result) => {
-                    window.ipcRender.send('login_success',resp);
-                });
-              }else{
-                Swal.fire({
-                  title: "Đăng nhập không thành công",
-                  text: "Kiểm tra lại thông tin đăng nhập",
-                  icon: "success"
-                });
-              }
+            window.ipcRender.send('login_fetch',{email, password});
 
-            }).fail((xhr, err) =>{
-              Swal.fire({
-                title: "Đăng nhập không thành công",
-                text: "Kiểm tra lại thông tin đăng nhập hoặc internet" ,
-                icon: "error"
-              });
-            })
+            window.ipcRender.receive('login_fetch', (resp) => {
+              console.log(resp);
+                if(typeof resp.token !== 'undefined'){
+                  Swal.fire({
+                    title: "Đăng nhập thành công",
+                    icon: "success"
+                  });
+                  window.ipcRender.send('login_success',resp);
+                }else{
+                  $(that).removeAttr('disabled');
+                  Swal.fire({
+                    title: "Đăng nhập không thành công",
+                    text: "Kiểm tra lại thông tin đăng nhập",
+                    icon: "error"
+                  });
+                }
+            });
+
           })
         });
       </script>
