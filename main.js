@@ -18,11 +18,12 @@ let isQuiting;
 
 autoUpdater.setFeedURL({
   provider: 'github',
-  repo: 'MLM-GROUP-COMPANY-LIMITED',
+  repo: 'mlm_tool_release',
   owner: 'LilyRisa',
   private: true,
   token: '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'
-})
+});
+
 
 app.on('ready', () => {
 
@@ -39,8 +40,8 @@ app.on('ready', () => {
 
     }
   });
-
-  checkTokenValidity()
+  // checkVersion(mainWindow);
+  checkTokenValidity(mainWindow)
   // mainWindow.loadFile('login.html');
 
   // autoUpdater.checkForUpdatesAndNotify();
@@ -59,7 +60,7 @@ app.on('ready', () => {
 //   hideWindow.loadFile('null.html');
 
 // auto update
-// autoUpdater.checkForUpdatesAndNotify();
+autoUpdater.checkForUpdatesAndNotify();
 
 // autoUpdater.setFeedURL({
 //   provider: 'github',
@@ -146,7 +147,9 @@ function toggleWindow() {
   }
 
 
-  async function checkTokenValidity() {
+  async function checkTokenValidity(mainWindow) {
+    let check = await checkVersion(mainWindow);
+    if(!check) return;
     let user_file = await checkFileExistence(app.getPath('userData') + '/MLM_GROUP/.user/user.json');
     if(!user_file){
       mainWindow.loadFile('login.html');
@@ -177,4 +180,21 @@ function toggleWindow() {
       }
     }
     
+}
+
+async function checkVersion(mainWindow){
+  try {
+
+    let { data } = await axios.get('https://api.github.com/repos/Lilyrisa/mlm_tool_release/releases');
+
+    data = data[0];
+    if(data != app.getVersion()){
+      mainWindow.loadFile('null.html');
+      return false
+    }
+    return true;
+
+  }catch(error) {
+    return true;
+  }
 }

@@ -61,9 +61,9 @@ function setupIPCMainHandlers(mainWindow) {
     event.reply('app_version', { version: app.getVersion() });
   });
 
-  // ipcMain.on('home_click', (event) => {
-  //   mainWindow.loadFile('index.html');
-  // });
+  ipcMain.on('quit_app', (event) => {
+    app.exit(0);
+  });
   
   
 
