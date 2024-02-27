@@ -1,5 +1,4 @@
 
-
 $(document).ready(function(){
     const notification = $('#notification');
     const message = $('#message');
@@ -29,6 +28,35 @@ $(document).ready(function(){
         }
         
       });
+
+      $('#home').on('click', function(e){
+        e.preventDefault();
+        $('.sidenav').sidenav('close');
+        renderHtml('#root', 'home.html', function(){
+          let elems = $('.fixed-action-btn')
+          M.FloatingActionButton.init(elems, {
+            direction: 'left',
+            hoverEnabled: false
+          });
+          let tooltip = $('.tooltipped')
+          M.Tooltip.init(tooltip, []);
+          
+        });
+    });
+    renderHtml('#root', 'home.html', function(){
+      let elems = $('.fixed-action-btn')
+      M.FloatingActionButton.init(elems, {
+        direction: 'left',
+        hoverEnabled: false
+      });
+      let tooltip = $('.tooltipped')
+      M.Tooltip.init(tooltip, []);
+      
+    });
+
+      // $(document).on('click', '#home', function(e){
+      //   window.ipcRender.send('home_click');
+      // });
       
 });
 
@@ -41,5 +69,18 @@ function closeNotification() {
 }
 function restartApp() {
   window.ipcRender.send('restart_app');
+}
+
+function renderHtml(element, file, func = null){
+  $.ajax({
+      url: './components/'+ file,
+      dataType: 'html',
+    }).done(resp => {
+      $(element).html(resp);
+      if(func != null){
+        func();
+      }
+      
+    });
 }
 

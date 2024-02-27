@@ -5,6 +5,9 @@ const {cronTiktok} = require('./cron');
 const {getCronProgress} = require('./helper/cron');
 const { autoUpdater } = require('electron-updater');
 const { log } = require('console');
+const axios = require('axios');
+const { checkFileExistence, createFile, } = require('./helper/ultils')
+var fs = require('fs').promises;
 
 const { updateElectronApp } = require('update-electron-app')
 
@@ -36,7 +39,9 @@ app.on('ready', () => {
 
     }
   });
-  mainWindow.loadFile('index.html');
+
+  checkTokenValidity()
+  // mainWindow.loadFile('login.html');
 
   // autoUpdater.checkForUpdatesAndNotify();
   updateElectronApp({
@@ -139,3 +144,37 @@ function toggleWindow() {
       mainWindow.show();
     }
   }
+
+
+  async function checkTokenValidity() {
+    let user_file = await checkFileExistence(app.getPath('userData') + '/MLM_GROUP/.user/user.json');
+    if(!user_file){
+      mainWindow.loadFile('login.html');
+    }else{
+      user_file = JSON.parse(user_file);
+      let token = user_file.token;
+      try {
+          // Gọi API kiểm tra token ở đây
+          const response = await axios.get('http://mlm.cm/api/check-token', {
+              headers: {
+                  Authorization: 'Bearer ' + token
+              }
+          });
+
+          if (response.status) {
+              // Nếu token hợp lệ, load trang main.html
+              mainWindow.loadFile('index.html');
+          } else {
+              user_file = {};
+              await fs.writeFile(app.getPath('userData') + '/MLM_GROUP/.user/user.json', JSON.stringify(user_file), 'utf-8');
+              // Nếu token không hợp lệ, load trang login.html
+              mainWindow.loadFile('login.html');
+          }
+      } catch (error) {
+          console.error('Error checking token validity:', error);
+          // Xử lý lỗi, ví dụ: load trang login.html
+          mainWindow.loadFile('login.html');
+      }
+    }
+    
+}

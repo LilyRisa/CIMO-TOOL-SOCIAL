@@ -14,6 +14,7 @@ const {ipcMainEditvideo} = require('./ipcEditvideo');
 const {ipcMainFile} = require('./ipcFile');
 const {ipcMainFb} = require('./ipcFB');
 const {ipcMainYT} = require('./ipcYT');
+const {ipcMainUser} = require('./ipcUser');
 const { autoUpdater } = require('electron-updater');
 
 
@@ -33,6 +34,8 @@ function setupIPCMainHandlers(mainWindow) {
 
   // YT ipc
   ipcMainYT(mainWindow);
+
+  ipcMainUser(mainWindow);
 
 
   ipcMain.on('open_devtool', (event, args) => {
@@ -57,6 +60,12 @@ function setupIPCMainHandlers(mainWindow) {
   ipcMain.on('app_version', (event) => {
     event.reply('app_version', { version: app.getVersion() });
   });
+
+  ipcMain.on('home_click', (event) => {
+    mainWindow.loadFile('index.html');
+  });
+  
+  
 
 }
 
