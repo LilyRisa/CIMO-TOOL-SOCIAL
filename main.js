@@ -151,6 +151,7 @@ function toggleWindow() {
     if(!user_file){
       mainWindow.loadFile('login.html');
     }else{
+      user_file = await fs.readFile(app.getPath('userData') + '/MLM_GROUP/.user/user.json', 'utf-8');
       user_file = JSON.parse(user_file);
       let token = user_file.token;
       try {
@@ -160,7 +161,6 @@ function toggleWindow() {
                   Authorization: 'Bearer ' + token
               }
           });
-
           if (response.data.status) {
               // Nếu token hợp lệ, load trang main.html
               mainWindow.loadFile('index.html');

@@ -39,8 +39,12 @@ function ipcMainUser(mainWindow){
         }catch(e){
             event.reply('login_fetch', {status: false});
         }
-        
-        
+    });
+
+    ipcMain.on('user_update', async (event, args) => {
+        let user = await fs.readFile(app.getPath('userData') + '/MLM_GROUP/.user/user.json', 'utf-8');
+        user = JSON.parse(user);
+        event.reply('user_update', user);
     });
 
 }

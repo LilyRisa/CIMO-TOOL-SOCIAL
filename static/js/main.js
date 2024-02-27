@@ -60,6 +60,12 @@ $(document).ready(function(){
       
 });
 
+window.ipcRender.send('user_update');
+window.ipcRender.receive('user_update', (event) => {
+    $('.name').text(event.name);
+    $('.email').text(event.email);
+});
+
 window.ipcRender.receive('app_version', (event) => {
   console.log('app_version', event);
 });
