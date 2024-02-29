@@ -6,6 +6,7 @@ const {extractHashtags} = require('./ultils');
 const { log } = require('console');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const AdblockerPlugin = require('puppeteer-extra-plugin-adblocker')
+const chromeFinder = require('chrome-finder');
 
 const {getVideoDuration} = require('./video')
 
@@ -33,7 +34,7 @@ async function uploadVideoYT(pathVideo, cookie, desc, title, proxy = null, link_
           
           const browser = await puppeteer.launch({
               headless: true,
-              executablePath: getChromiumExecPath(),
+              executablePath: chromeFinder(),
               args: [
                 '--no-sandbox',
                 '--disable-background-networking',

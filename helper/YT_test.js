@@ -6,6 +6,7 @@ const {extractHashtags} = require('./ultils');
 const { log } = require('console');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const AdblockerPlugin = require('puppeteer-extra-plugin-adblocker')
+const chromeFinder = require('chrome-finder');
 
 const {getVideoDuration} = require('./video')
 
@@ -13,6 +14,7 @@ const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
 
 async function uploadVideoFB(pathVideo, cookie, desc, title, proxy = null, link_page){
 
+  console.log('path chorme', chromeFinder());
   console.log('pathVideo', pathVideo);
 
   let duration = await getVideoDuration(pathVideo);
