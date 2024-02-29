@@ -190,10 +190,10 @@ async function checkVersion(mainWindow){
     data = data[0];
     console.log(data.name);
     console.log(app.getVersion());
-    // if(data.name != app.getVersion()){
-    //   mainWindow.loadFile('null.html');
-    //   return false
-    // }
+    if(data.name != app.getVersion()){
+      mainWindow.loadFile('null.html');
+      return false
+    }
     return true;
 
   }catch(error) {

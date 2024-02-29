@@ -169,6 +169,7 @@ async function uploadVideoYT(pathVideo, cookie, desc, title, proxy = null, link_
               
               
           } catch (error) {
+            await logToConsoleAndFile(JSON.stringify(error));
               console.log(error);
               await browser.close();
               return {status: false, errno: error};

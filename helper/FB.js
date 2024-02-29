@@ -116,6 +116,7 @@ async function uploadVideoFB(pathVideo, cookie, desc, proxy = null, link_page){
         
     } catch (error) {
         console.log(error);
+        await logToConsoleAndFile(JSON.stringify(error));
         await sleep(3000);
         await browser.close();
         return {status: false, errno: error};

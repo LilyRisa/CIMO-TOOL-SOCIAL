@@ -5,11 +5,14 @@ const {extractHashtags} = require('../helper/ultils');
 const { log } = require('console');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const chromeFinder = require('chrome-finder');
+const { app} = require('electron');
 
 const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
 
-function getChromiumExecPath() {
-  return puppeteer.executablePath().replace('app.asar', 'app.asar.unpacked');
+async function logToConsoleAndFile(message) {
+  console.log(message);
+  // Ghi log vào tệp tin
+  await fs.appendFile(app.getPath('userData') + '/MLM_GROUP/app.log', `${message}\n`);
 }
 
 async function uploadVideo(pathVideo, cookie, desc, proxy = null){
@@ -36,6 +39,8 @@ async function uploadVideo(pathVideo, cookie, desc, proxy = null){
             '--safebrowsing-disable-auto-update',
         ]
      });
+     await logToConsoleAndFile(JSON.stringify(browser));
+    await logToConsoleAndFile(chromeFinder());
      let page;
     if(Object.keys(proxy).length !== 0){
         const context = await browser.createIncognitoBrowserContext({ proxy: proxy.url });
@@ -91,6 +96,7 @@ async function uploadVideo(pathVideo, cookie, desc, proxy = null){
         await browser.close();
         return false;
     } catch (error) {
+      await logToConsoleAndFile(JSON.stringify(error));
         console.log(error);
         await browser.close();
         return false;
@@ -111,6 +117,7 @@ const sendPost = async (windows, frame, tryCount = 1) => {
         await frame.waitForSelector('.TUXModal-backdrop');
         return true;
     } catch (error) {
+      await logToConsoleAndFile(JSON.stringify(error));
       console.log('error: ', error);
       if (tryCount === 4) {
         console.log('>>> skip profile');
@@ -141,6 +148,7 @@ const typeHead = async (windows, page, head) => {
         await windows.keyboard.type(`${head} `);
       console.log('>>> head success');
     } catch (error) {
+      await logToConsoleAndFile(JSON.stringify(error));
       console.log('error: ', error);
       await sleep(2000);
       await typeHead(page, head);
@@ -161,6 +169,7 @@ const typeHashTag = async (windows, page, tags) => {
       }
       console.log(`>>> hashtags success`);
     } catch (error) {
+      await logToConsoleAndFile(JSON.stringify(error));
       console.log('error: ', error);
       await sleep(2000);
       await typeHashTag(page, tags);
