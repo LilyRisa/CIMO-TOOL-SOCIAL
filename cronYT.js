@@ -32,6 +32,7 @@ function startCron(file, data, campain){
     let task = schedule.scheduleJob(campain.uid,data.crontab, async () => {
 
         let desc = getRandomText(data.desc);
+        let title = getRandomText(data.title);
         let arr_video = arrVideosInDirectory(data.folder_video);
         let path_video = '';
         
