@@ -45,10 +45,10 @@ app.on('ready', () => {
   // mainWindow.loadFile('login.html');
 
   // autoUpdater.checkForUpdatesAndNotify();
-  updateElectronApp({
-    updateInterval: '1 hour',
-    logger: require('electron-log')
-  })
+  // updateElectronApp({
+  //   updateInterval: '1 hour',
+  //   logger: require('electron-log')
+  // })
   // mainWindow.webContents.openDevTools(); // debug
 //   // windows ẩn
 //   hideWindow = new BrowserWindow({
@@ -60,7 +60,7 @@ app.on('ready', () => {
 //   hideWindow.loadFile('null.html');
 
 // auto update
-autoUpdater.checkForUpdatesAndNotify();
+// autoUpdater.checkForUpdatesAndNotify();
 
 // autoUpdater.setFeedURL({
 //   provider: 'github',
