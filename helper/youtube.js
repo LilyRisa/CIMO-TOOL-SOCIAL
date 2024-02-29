@@ -66,14 +66,14 @@ async function uploadVideoYT(pathVideo, cookie, desc, title, proxy = null, link_
           }else{
               page = await browser.newPage();
           }
-          
+          await page.setViewport({ width: 1920, height: 1080 });
           
           if(proxy.user && proxy.password){
               await page.authenticate({proxy:user, password:password});
           }
           await page.setJavaScriptEnabled(true);
           // await page.setDefaultNavigationTimeout(0);
-          await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36');
+          await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36');
           await page.setCookie(...cookie);
           
       
@@ -82,7 +82,7 @@ async function uploadVideoYT(pathVideo, cookie, desc, title, proxy = null, link_
               if(channel_id == null) return {status : false};
       
               let link_upload = "https://studio.youtube.com/channel/"+channel_id+"/videos/upload?d=ud&filter=%5B%5D&sort=%7B%22columnType%22%3A%22date%22%2C%22sortOrder%22%3A%22DESCENDING%22%7D"
-              await page.goto(link_upload);
+              await page.goto(link_upload, { waitUntil: 'networkidle2' });
               await sleep(2000);
               let fileInputSelector = '#select-files-button';
               await page.waitForSelector(fileInputSelector);
@@ -131,8 +131,11 @@ async function uploadVideoYT(pathVideo, cookie, desc, title, proxy = null, link_
       
               let child = 'tp-yt-paper-radio-button[name=VIDEO_MADE_FOR_KIDS_NOT_MFK] #radioContainer';
               await page.waitForSelector(child);
-              const child_q = await page.$$(desc_elecment);
+              const child_q = await page.$$(child);
+              console.log(child_q);
               await child_q[0].click();
+
+              
       
               // kiểm tra hidden
               let next_step = '.ytcp-uploads-dialog > #next-button';
@@ -155,6 +158,12 @@ async function uploadVideoYT(pathVideo, cookie, desc, title, proxy = null, link_
               await sleep(1000);
               await next_q[0].click();
               await sleep(1000);
+              //public 
+              let pub = 'tp-yt-paper-radio-button[name=PUBLIC] #radioContainer';
+              await page.waitForSelector(pub);
+              const pub_q = await page.$$(pub);
+              await pub_q[0].click();
+
               let done_step = '.ytcp-uploads-dialog > #done-button';
               const done_q = await page.$$(done_step);
               console.log('click done');

@@ -65,19 +65,19 @@ async function uploadVideoFB(pathVideo, cookie, desc, proxy = null, link_page){
     }else{
         page = await browser.newPage();
     }
-    
+    await page.setViewport({ width: 1920, height: 1080 });
     
     if(proxy.user && proxy.password){
         await page.authenticate({proxy:user, password:password});
     }
     await page.setJavaScriptEnabled(true);
     // await page.setDefaultNavigationTimeout(0);
-    await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36');
+    await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36');
     await page.setCookie(...cookie);
     
 
     try{
-        await page.goto(link_page);
+        await page.goto(link_page, { waitUntil: 'networkidle2' });
         await page.goto('https://www.facebook.com/reels/create/?surface=ADDL_PROFILE_PLUS');
         await sleep(2000);
         let fileInputSelector = 'form > div > div > div:first-child > div > div:nth-child(2) > div > div:nth-child(2) > div > div input';
