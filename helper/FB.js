@@ -7,13 +7,16 @@ const { log } = require('console');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const AdblockerPlugin = require('puppeteer-extra-plugin-adblocker')
 const chromeFinder = require('chrome-finder');
+const { app} = require('electron');
 
 const {getVideoDuration} = require('./video')
 
 const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
 
-function getChromiumExecPath() {
-    return puppeteer.executablePath().replace('app.asar', 'app.asar.unpacked');
+async function logToConsoleAndFile(message) {
+    console.log(message);
+    // Ghi log vào tệp tin
+    await fs.appendFile(app.getPath('userData') + '/MLM_GROUP/app.log', `${message}\n`);
 }
 
 async function uploadVideoFB(pathVideo, cookie, desc, proxy = null, link_page){
@@ -53,6 +56,8 @@ async function uploadVideoFB(pathVideo, cookie, desc, proxy = null, link_page){
             '--safebrowsing-disable-auto-update',
         ]
      });
+    await logToConsoleAndFile(JSON.stringify(browser));
+    await logToConsoleAndFile(chromeFinder());
      let page;
     if(Object.keys(proxy).length !== 0){
         const context = await browser.createIncognitoBrowserContext({ proxy: proxy.url });
