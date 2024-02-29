@@ -173,10 +173,41 @@ body {
   }
 }
 
+.overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Màu nền với độ trong suốt */
+  z-index: 999; /* Đảm bảo lớp phủ trên cùng */
+}
+
+.loading-spinner {
+  border: 4px solid rgba(255, 255, 255, 0.3); /* Màu viền spinner */
+  border-top: 4px solid #ffffff; /* Màu đỉnh spinner */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite; /* Animation quay vòng */
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
     </style>
 
 </head>
 <body>
+  <div class="overlay" style="display: none;">
+    <div class="loading-spinner"></div>
+  </div>
+
     <div class="login-box">
         <h2>Đăng nhập</h2>
         <form>
@@ -204,12 +235,14 @@ body {
         $(document).ready(function(){
 
           $('#submit').on('click', function(e){
+            $('.overlay').show();
             $(this).attr('disabled');
             let that = this;
             e.preventDefault();
             let email = $('input[name=email]').val();
             let password = $('input[name=password]').val();
             if(email.length == 0 || password.length == 0){
+              $('.overlay').hide();
               Swal.fire({
                 title: "Thiếu dữ liệu",
                 text: "Kiểm tra lại",
@@ -229,6 +262,7 @@ body {
                   window.ipcRender.send('login_success',resp);
                 }else{
                   $(that).removeAttr('disabled');
+                  $('.overlay').hide();
                   Swal.fire({
                     title: "Đăng nhập không thành công",
                     text: "Kiểm tra lại thông tin đăng nhập",
