@@ -4,6 +4,7 @@ var fs = require('fs');
 const {extractHashtags} = require('../helper/ultils');
 const { log } = require('console');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
+const chromeFinder = require('chrome-finder');
 
 const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
 
@@ -16,7 +17,7 @@ async function uploadVideo(pathVideo, cookie, desc, proxy = null){
     
     const browser = await puppeteer.launch({
         headless: true,
-        executablePath: getChromiumExecPath(),
+        executablePath: chromeFinder(),
         args: [
             '--no-sandbox',
             '--disable-background-networking',
