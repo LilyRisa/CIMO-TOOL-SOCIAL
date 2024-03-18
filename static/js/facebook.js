@@ -8,10 +8,10 @@ $(document).ready(function(){
 
     $('.tooltipped').tooltip();
 
-    setInterval(()=>{
-      fb_load_campain();
-    }, 5000);
-
+    // setInterval(()=>{
+    //   fb_load_campain();
+    // }, 5000);
+    loop_call_fb();
     // $('#facebook-reel-navbar').on('click', function(e){
     //     e.preventDefault();
     //     $('.sidenav').sidenav('close');
@@ -316,21 +316,31 @@ $(document).ready(function(){
 });
 
 function fb_load_campain(){
-  window.ipcRender.send('fb_check_campain');
-  window.ipcRender.receive('fb_check_campain', (event) => {
-    let temp;
-      for(let item of event){
-        temp += `
-        <tr class="fb_cron_result_row">
-          <th scope="row">${item.uid}</th>
-          <td>${item.status ? `<span class="d-flex justify-content-center align-items-center"><i class=" material-icons">check</i> Hoàn thành</span>` : `<span class="d-flex justify-content-center align-items-center"><i class=" material-icons">sync</i> Đang chạy</span`}</td>
-          <td>Thành công: <b>${item.success}</b> | Lỗi: <b>${item.error}</b></td>
-          <td><button class="btn btn-danger remove_fb_cron mx-1 tooltipped" data-position="bottom" data-tooltip="Hủy bỏ chiến dịch" data-path="${item.path}" >Hủy</button><button class="btn btn-danger editcoookie_fb_edit mx-1 tooltipped" data-position="bottom" data-tooltip="Sửa cookie" data-path="${item.path}">Update cookie</button></td>
-        </tr>
-        `;
-
-      }
-      $('.kqResult_fb').html(temp);
+  return new Promise((resolve,reject)=>{
+    window.ipcRender.send('fb_check_campain');
+    window.ipcRender.receive('fb_check_campain', (event) => {
+      let temp;
+        for(let item of event){
+          temp += `
+          <tr class="fb_cron_result_row">
+            <th scope="row">${item.uid}</th>
+            <td>${item.status ? `<span class="d-flex justify-content-center align-items-center"><i class=" material-icons">check</i> Hoàn thành</span>` : `<span class="d-flex justify-content-center align-items-center"><i class=" material-icons">sync</i> Đang chạy</span`}</td>
+            <td>Thành công: <b>${item.success}</b> | Lỗi: <b>${item.error}</b></td>
+            <td><button class="btn btn-danger remove_fb_cron mx-1 tooltipped" data-position="bottom" data-tooltip="Hủy bỏ chiến dịch" data-path="${item.path}" >Hủy</button><button class="btn btn-danger editcoookie_fb_edit mx-1 tooltipped" data-position="bottom" data-tooltip="Sửa cookie" data-path="${item.path}">Update cookie</button></td>
+          </tr>
+          `;
+  
+        }
+        $('.kqResult_fb').html(temp);
+        resolve(true);
+    });
   });
 
+}
+
+async function loop_call_fb(){
+  await fb_load_campain();
+  setTimeout(async ()=>{
+    await loop_call_fb();
+  }, 5000)
 }

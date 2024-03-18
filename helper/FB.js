@@ -109,6 +109,8 @@ async function uploadVideoFB(pathVideo, cookie, desc, proxy = null, link_page){
         await page.waitForSelector(next_step3);
         let step3 = await page.$$(next_step3);
         await step3[1].click();
+        await page.waitForNavigation();
+        console.log("Chuyển hướng");
         await sleep(3000);
         await browser.close();
         return {status: true};

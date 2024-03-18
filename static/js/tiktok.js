@@ -8,10 +8,13 @@ $(document).ready(function(){
 
     $('.tooltipped').tooltip();
 
-    setInterval(()=>{
-      console.log('setInterval tiktok');
-      tiktok_load_campain();
-    }, 5000);
+    // tiktok_load_campain();
+
+    // setInterval(()=>{
+    //   console.log('setInterval tiktok');
+    //   tiktok_load_campain();
+    // }, 5000);
+    loop_call_tiktok();
 
 
     $('#tiktok-navbar').on('click', function(e){
@@ -308,21 +311,31 @@ $(document).on('click', '.back_tiktok_list',function(e){
   });
 
   function tiktok_load_campain(){
-    window.ipcRender.send('tiktok_check_campain');
-    window.ipcRender.receive('tiktok_check_campain', (event) => {
-      let temp;
-        for(let item of event){
-          temp += `
-          <tr class="tiktok_cron_result_row">
-            <th scope="row">${item.uid}</th>
-            <td>${item.status ? `<span class="d-flex justify-content-center align-items-center"><i class=" material-icons">check</i> Hoàn thành</span>` : `<span class="d-flex justify-content-center align-items-center"><i class=" material-icons">sync</i> Đang chạy</span`}</td>
-            <td>Thành công: <b>${item.success}</b> | Lỗi: <b>${item.error}</b></td>
-            <td><button class="btn btn-danger remove_tiktok_cron mx-1 tooltipped" data-position="bottom" data-tooltip="Hủy bỏ chiến dịch" data-path="${item.path}" >Hủy</button><button class="btn btn-danger editcoookie_tiktok_edit mx-1 tooltipped" data-position="bottom" data-tooltip="Sửa cookie" data-path="${item.path}">Update cookie</button></td>
-          </tr>
-          `;
-  
-        }
-        $('.kqResult_tiktok').html(temp);
+    return new Promise((resolve,reject)=>{
+      window.ipcRender.send('tiktok_check_campain');
+      window.ipcRender.receive('tiktok_check_campain', (event) => {
+        let temp;
+          for(let item of event){
+            temp += `
+            <tr class="tiktok_cron_result_row">
+              <th scope="row">${item.uid}</th>
+              <td>${item.status ? `<span class="d-flex justify-content-center align-items-center"><i class=" material-icons">check</i> Hoàn thành</span>` : `<span class="d-flex justify-content-center align-items-center"><i class=" material-icons">sync</i> Đang chạy</span`}</td>
+              <td>Thành công: <b>${item.success}</b> | Lỗi: <b>${item.error}</b></td>
+              <td><button class="btn btn-danger remove_tiktok_cron mx-1 tooltipped" data-position="bottom" data-tooltip="Hủy bỏ chiến dịch" data-path="${item.path}" >Hủy</button><button class="btn btn-danger editcoookie_tiktok_edit mx-1 tooltipped" data-position="bottom" data-tooltip="Sửa cookie" data-path="${item.path}">Update cookie</button></td>
+            </tr>
+            `;
+    
+          }
+          $('.kqResult_tiktok').html(temp);
+          resolve(true);
+      });
     });
   
+  }
+
+  async function loop_call_tiktok(){
+    await tiktok_load_campain();
+    setTimeout(async ()=>{
+      await loop_call_tiktok();
+    }, 5000)
   }
