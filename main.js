@@ -112,9 +112,9 @@ tray.on('click', () => {
         isQuiting = true;
         app.quit();
     }},
-    { label: 'Developer Tools', click: function(){
-      mainWindow.webContents.toggleDevTools();
-  }}
+    // { label: 'Developer Tools', click: function(){
+    //     mainWindow.webContents.toggleDevTools();
+    // }}
 
   ]);
   tray.setContextMenu(contextMenu);

@@ -1,4 +1,4 @@
-const { ipcMain, dialog, app, remote } = require('electron');
+const { ipcMain, dialog, app, remote, shell  } = require('electron');
 var fs = require('fs').promises;
 const cronParser = require('cron-parser');
 const {isValidCronExpression, checkFileExistence, createFile} = require('./helper/ultils')
@@ -63,6 +63,10 @@ function setupIPCMainHandlers(mainWindow) {
 
   ipcMain.on('quit_app', (event) => {
     app.exit(0);
+  });
+
+  ipcMain.on('register', (event) => {
+    shell.openExternal('https://mlmgroupcompany.com/register');
   });
   
   
