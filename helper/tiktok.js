@@ -19,7 +19,7 @@ async function uploadVideo(pathVideo, cookie, desc, proxy = null){
   puppeteer.use(StealthPlugin())
     
     const browser = await puppeteer.launch({
-        headless: true,
+        headless: false,
         executablePath: chromeFinder(),
         args: [
             '--no-sandbox',

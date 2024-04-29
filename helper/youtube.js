@@ -37,7 +37,7 @@ async function uploadVideoYT(pathVideo, cookie, desc, title, proxy = null, link_
         puppeteer.use(AdblockerPlugin());
           
           const browser = await puppeteer.launch({
-              headless: true,
+              headless: false,
               executablePath: chromeFinder(),
               args: [
                 '--no-sandbox',

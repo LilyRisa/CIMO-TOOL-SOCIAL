@@ -36,7 +36,7 @@ async function uploadVideoFB(pathVideo, cookie, desc, proxy = null, link_page){
   puppeteer.use(AdblockerPlugin());
     
     const browser = await puppeteer.launch({
-        headless: true,
+        headless: false,
         executablePath: chromeFinder(),
         args: [
             '--no-sandbox',
