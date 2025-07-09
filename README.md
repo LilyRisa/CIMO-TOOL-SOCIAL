@@ -25,24 +25,24 @@ csharp
 Sao chép
 Chỉnh sửa
 .
-├── components/         # UI components (nếu có)
-├── helper/             # Hàm hỗ trợ chung
-├── static/             # Tài nguyên tĩnh (css, js...)
-├── cron.js             # Scheduler chính
-├── cronYT.js           # Scheduler dành riêng cho YouTube
-├── ipcEditvideo.js     # Chỉnh sửa video (cắt, watermark…)
-├── ipcFile.js          # Xử lý file/video
-├── ipcTiktok.js        # Upload lên TikTok
-├── ipcFB.js            # Upload lên Facebook
-├── ipcYT.js            # Upload lên YouTube
-├── ipcUser.js          # Quản lý tài khoản
-├── main.js             # Entry point của Electron
-├── preload.js          # Bridge giữa renderer và main process
-├── index.html          # UI chính
-├── login.html          # Form đăng nhập
-├── null.html           # Trang phụ trợ
-├── package.json        # Metadata & dependencies
-└── webpack.config.js   # Cấu hình đóng gói frontend
+├── components/         # UI components (nếu có)  
+├── helper/             # Hàm hỗ trợ chung  
+├── static/             # Tài nguyên tĩnh (css, js...)  
+├── cron.js             # Scheduler chính  
+├── cronYT.js           # Scheduler dành riêng cho YouTube  
+├── ipcEditvideo.js     # Chỉnh sửa video (cắt, watermark…)  
+├── ipcFile.js          # Xử lý file/video  
+├── ipcTiktok.js        # Upload lên TikTok  
+├── ipcFB.js            # Upload lên Facebook  
+├── ipcYT.js            # Upload lên YouTube  
+├── ipcUser.js          # Quản lý tài khoản  
+├── main.js             # Entry point của Electron  
+├── preload.js          # Bridge giữa renderer và main process  
+├── index.html          # UI chính  
+├── login.html          # Form đăng nhập  
+├── null.html           # Trang phụ trợ  
+├── package.json        # Metadata & dependencies  
+└── webpack.config.js   # Cấu hình đóng gói frontend  
 ## 🛠 Cài đặt & chạy thử
 ### Clone dự án:
 
