@@ -1,25 +1,26 @@
-CIMO-TOOL-SOCIAL
+# CIMO-TOOL-SOCIAL
 Lập lịch và tự động đăng video ngắn lên nhiều nền tảng mạng xã hội.
 
-🧩 Mục tiêu
+
+## 🧩 Mục tiêu
 Tự động hóa quy trình từ chỉnh sửa, lên lịch đến đăng video trên TikTok, YouTube, Facebook... Giúp tiết kiệm thời gian và đảm bảo đăng đúng giờ vàng.
 
-✨ Tính năng nổi bật
+## ✨ Tính năng nổi bật
 Chỉnh sửa video nội bộ (IPC)
 – Các file như ipcEditvideo.js xử lý ghép intro/outro, watermark, subtitle.
 – Kiến trúc đa luồng: riêng biệt giữa chỉnh sửa (ipcEditvideo), xử lý file (ipcFile), và upload (ipcTiktok, ipcFB, ipcYT).
 
-Lập lịch đăng video
+## Lập lịch đăng video
 – cron.js & cronYT.js dùng cron để định kỳ gọi quy trình đăng theo lịch.
 
-Tự động đăng lên nhiều nền tảng
+## Tự động đăng lên nhiều nền tảng
 – Tương tác trực tiếp với nền tảng thông qua ipcTiktok.js, ipcFB.js, ipcYT.js.
 – Sử dụng Electron (các file preload.js, main.js) để chạy headless browser và thực hiện thao tác đăng tự động.
 
-Giao diện web/mobile nhẹ nhàng
+## Giao diện
 – index.html, login.html, null.html cung cấp UI cơ bản để cấu hình tài khoản, xem tiến trình, và login.
 
-📂 Cấu trúc thư mục
+##📂 Cấu trúc thư mục
 csharp
 Sao chép
 Chỉnh sửa
@@ -42,33 +43,25 @@ Chỉnh sửa
 ├── null.html           # Trang phụ trợ
 ├── package.json        # Metadata & dependencies
 └── webpack.config.js   # Cấu hình đóng gói frontend
-🛠 Cài đặt & chạy thử
-Clone dự án:
+## 🛠 Cài đặt & chạy thử
+### Clone dự án:
 
-bash
-Sao chép
-Chỉnh sửa
-git clone https://github.com/LilyRisa/CIMO-TOOL-SOCIAL.git
-cd CIMO-TOOL-SOCIAL
-Cài đặt dependencies:
+``` git clone https://github.com/LilyRisa/CIMO-TOOL-SOCIAL.git```
+```cd CIMO-TOOL-SOCIAL```
+### Cài đặt dependencies:
+```npm install```
 
-bash
-Sao chép
-Chỉnh sửa
-npm install
-Chạy chế độ phát triển:
+### Chạy chế độ phát triển:
 
-bash
-Sao chép
-Chỉnh sửa
-npm run start
-hoặc nếu bạn dùng Electron:
 
-bash
-Sao chép
-Chỉnh sửa
-npm run electron
-Thiết lập tài khoản & lịch đăng:
+```npm run start```
+
+### hoặc nếu bạn dùng Electron:
+
+```npm run electron```
+
+
+## Thiết lập tài khoản & lịch đăng:
 
 Mở giao diện login.html, đăng nhập tài khoản mạng xã hội.
 
@@ -76,7 +69,7 @@ Cấu hình lịch trong cron.js theo cron schedule mong muốn.
 
 Đặt folder chứa video gốc và cấu hình edit trong UI hoặc file config.
 
-📌 Mẹo & Lưu ý
+## 📌 Mẹo & Lưu ý
 Đảm bảo video gốc tồn tại và định dạng phù hợp (mp4, mov…).
 
 Các script IPC chạy độc lập, dễ debug từng phần (edit → file → upload).
@@ -85,7 +78,7 @@ Với nền tảng không có API công khai, Electron + web interaction đảm 
 
 Có thể tích hợp proxy hoặc đa tài khoản qua ipcUser.js nếu cần.
 
-🚧 Hướng phát triển
+## 🚧 Hướng phát triển
 Hỗ trợ thêm nền tảng: Instagram Reels, LinkedIn,...
 
 Tối ưu hiệu năng: xử lý video hàng loạt song song, sử dụng GPU tăng tốc.
@@ -94,7 +87,7 @@ Giao diện quản lý nâng cao: hiển thị lịch đã đăng, chỉnh sửa
 
 Tích hợp CI/CD: tự động build, test và deploy.
 
-👥 Đóng góp & Liên hệ
+## 👥 Đóng góp & Liên hệ
 Chào đón mọi pull request & issue!
 
 Author: LilyRisa
@@ -103,5 +96,5 @@ Github: LilyRisa/CIMO-TOOL-SOCIAL
 
 Email: support@cimo.vn
 
-ad: [CIMO - MỌI THỨ BẠN CẦN VỚI MỨC GIÁ TỐT NHẤT](https://cimo.vn)
+ads: [CIMO - MỌI THỨ BẠN CẦN VỚI MỨC GIÁ TỐT NHẤT](https://cimo.vn)
 
