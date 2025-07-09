@@ -20,10 +20,8 @@ Chỉnh sửa video nội bộ (IPC)
 ## Giao diện
 – index.html, login.html, null.html cung cấp UI cơ bản để cấu hình tài khoản, xem tiến trình, và login.
 
-##📂 Cấu trúc thư mục
-csharp
-Sao chép
-Chỉnh sửa
+## 📂 Cấu trúc thư mục  
+
 .
 ├── components/         # UI components (nếu có)  
 ├── helper/             # Hàm hỗ trợ chung  
@@ -43,6 +41,7 @@ Chỉnh sửa
 ├── null.html           # Trang phụ trợ  
 ├── package.json        # Metadata & dependencies  
 └── webpack.config.js   # Cấu hình đóng gói frontend  
+
 ## 🛠 Cài đặt & chạy thử
 ### Clone dự án:
 
