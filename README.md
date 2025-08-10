@@ -87,7 +87,8 @@ Giao diện quản lý nâng cao: hiển thị lịch đã đăng, chỉnh sửa
 ## 👥 Đóng góp & Liên hệ
 Chào đón mọi pull request & issue!
 
-Eng
+# Eng
+
 # CIMO-TOOL-SOCIAL
 chedule and automatically post short videos to multiple social media platforms.
 
@@ -167,7 +168,7 @@ Internal Video Editing (IPC)
 – Performance optimization: batch process videos in parallel, leverage GPU acceleration.
 – Advanced management UI: display posted schedules, edit schedules directly, detailed logs.
 
-## 👥 ĐContribution & Contact
+## 👥 Contribution & Contact
 Pull requests & issues are welcome!
 
 
@@ -178,5 +179,6 @@ Github: LilyRisa/CIMO-TOOL-SOCIAL
 Email: support@cimo.vn
 
 ads: [CIMO - MỌI THỨ BẠN CẦN VỚI MỨC GIÁ TỐT NHẤT](https://cimo.vn)
+
 
 
