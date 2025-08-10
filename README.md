@@ -84,10 +84,92 @@ Tối ưu hiệu năng: xử lý video hàng loạt song song, sử dụng GPU t
 
 Giao diện quản lý nâng cao: hiển thị lịch đã đăng, chỉnh sửa lịch trực tiếp, log chi tiết.
 
-Tích hợp CI/CD: tự động build, test và deploy.
-
 ## 👥 Đóng góp & Liên hệ
 Chào đón mọi pull request & issue!
+
+Eng
+# CIMO-TOOL-SOCIAL
+chedule and automatically post short videos to multiple social media platforms.
+
+
+## 🧩 Goal
+Automate the entire process from editing, scheduling, to posting videos on TikTok, YouTube, Facebook, etc. Helps save time and ensures posting at the golden hour.
+
+## ✨ Key Features
+Internal Video Editing (IPC)
+– Files like ipcEditvideo.js handle intro/outro merging, watermark, subtitles.
+– Multi-thread architecture: separate processes for editing (ipcEditvideo), file handling (ipcFile), and uploading (ipcTiktok, ipcFB, ipcYT).
+
+## Video Posting Scheduler
+– cron.js & cronYT.js use cron to periodically trigger the posting process according to the set schedule.
+
+## Automatic Posting to Multiple Platforms
+– Directly interacts with platforms via ipcTiktok.js, ipcFB.js, ipcYT.js.
+– Uses Electron (preload.js, main.js) to run a headless browser and perform automated posting actions.
+
+## User Interface
+– index.html, login.html, null.html provide a basic UI to configure accounts, view progress, and log in.
+
+## 📂 Folder Structure
+
+.
+├── components/         # UI components (if any)  
+├── helper/             # Common helper functions  
+├── static/             # Static assets (css, js...)
+├── cron.js             # Main scheduler
+├── cronYT.js           # YouTube-specific scheduler
+├── ipcEditvideo.js     # Video editing (cut, watermark, etc.)
+├── ipcFile.js          # File/video processing  
+├── ipcTiktok.js        # Upload to TikTok  
+├── ipcFB.js            # Upload to Facebook  
+├── ipcYT.js            # Upload to YouTube  
+├── ipcUser.js          # Account management  
+├── main.js             # Electron entry point 
+├── preload.js          # Bridge between renderer and main process  
+├── index.html          # Main UI    
+├── login.html          # Login form  
+├── null.html           # Auxiliary page
+├── package.json        # Metadata & dependencies  
+└── webpack.config.js   # Frontend build configuration  
+
+## 🛠 Installation & Run
+### Clone the project:
+
+``` git clone https://github.com/LilyRisa/CIMO-TOOL-SOCIAL.git```
+```cd CIMO-TOOL-SOCIAL```
+### Install dependencies:
+```npm install```
+
+### Run in development mode:
+
+
+```npm run start```
+
+### Or, if you use Electron:
+
+```npm run electron```
+
+
+## Account Setup & Scheduling
+
+– Open login.html UI and log into your social media account.
+– Configure the schedule in cron.js using the desired cron schedule.
+– Set the folder containing original videos and configure editing options in the UI or config file.
+
+## 📌 Tips & Notes
+– Ensure the source videos exist and are in supported formats (mp4, mov, etc.).
+– IPC scripts run independently, making it easy to debug each step (edit → file → upload).
+– For platforms without a public API, Electron + web interaction ensures automated posting.
+– Can integrate proxy or multi-account support via ipcUser.js if needed.
+
+## 🚧 Future Development
+– Support additional platforms: Instagram Reels, LinkedIn, etc.
+– Performance optimization: batch process videos in parallel, leverage GPU acceleration.
+– Advanced management UI: display posted schedules, edit schedules directly, detailed logs.
+
+## 👥 ĐContribution & Contact
+Pull requests & issues are welcome!
+
 
 Author: LilyRisa
 
@@ -96,4 +178,5 @@ Github: LilyRisa/CIMO-TOOL-SOCIAL
 Email: support@cimo.vn
 
 ads: [CIMO - MỌI THỨ BẠN CẦN VỚI MỨC GIÁ TỐT NHẤT](https://cimo.vn)
+
 
