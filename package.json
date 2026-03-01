@@ -15,7 +15,7 @@
   "devDependencies": {
     "css-loader": "^6.10.0",
     "electron": "^28.2.0",
-    "electron-builder": "^24.9.1",
+    "electron-builder": "^24.13.3",
     "file-loader": "^6.2.0",
     "node-sass": "^9.0.0",
     "sass": "^1.71.0",
