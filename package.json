@@ -38,7 +38,7 @@
     "mini-css-extract-plugin": "^2.8.0",
     "node-cron": "^3.0.3",
     "node-schedule": "^2.1.1",
-    "puppeteer": "^21.9.0",
+    "puppeteer": "^24.22.3",
     "puppeteer-extra": "^3.3.6",
     "puppeteer-extra-plugin-adblocker": "^2.13.6",
     "puppeteer-extra-plugin-stealth": "^2.11.2",
